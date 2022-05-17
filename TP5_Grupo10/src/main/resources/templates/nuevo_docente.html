@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Docentes</title>
+<!-- Bootstrap Referencia con CDN-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+</head>
+
+<body class="container">
+	<h1 class="text-center">Formulario para nuevo Docente</h1>
+
+	<h3>Alta de Docente</h3>
+
+	<form class="card p-3 bg-light" th:action="@{/docente/guardar}"
+		method="POST" th:object="${docente}">
+		<!-- 	<form class="card p-3 bg-light"> -->
+		<div class="row mb-3">
+			<label for="inputLegajo" class="col-sm-2 col-form-label">Legajo</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputLegajo"
+					th:field="*{legajo}">
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<label for="inputNombres" class="col-sm-2 col-form-label">Nombres</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputNombres"
+					th:field="*{nombre}">
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label for="inputApellidos" class="col-sm-2 col-form-label">Apellidos</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputApellidos"
+					th:field="*{apellido}">
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<label for="inputEmail" class="col-sm-2 col-form-label">E-mail</label>
+			<div class="col-sm-10">
+				<input type="email" class="form-control" id="inputEmail"
+					th:field="*{email}">
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<label for="inputTelefono" class="col-sm-2 col-form-label">Teléfono</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputTelefono"
+					th:field="*{telefono}">
+			</div>
+		</div>
+
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			<button class="btn btn-primary me-md-2" type="submit">Enviar</button>
+			<a th:href="@{/inicio}" id="cancel" class="btn btn-secondary">Cancelar</a>
+		</div>
+
+	</form>
+
+	<!-- Uso del fragmento header-->
+	<footer th:replace="layouts/footer::ffooter"></footer>
+
+</body>
+</html>
