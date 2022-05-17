@@ -15,22 +15,96 @@
 <body>
 	<!-- Uso del fragmento header-->
 	<header th:replace="layouts/header::fheader"></header>
-	<h1>BECAS PV</h1>
-	
-	<img alt="Becas Imagen" src="images/becaimg.jpg" title="Becas 2022">
-	<article>
-		<section>
-			<h2>Cursos con inscripción abierta</h2>
-			<ol>
-				<li><a href="idiomas">Idiomas</a></li>
-				<li>Diseño</li>
-				<li>Desarrollo</li>
-				<li>Marketing</li>
-				<li>Conferencias</li>
-			</ol>
-		</section>
-	</article>
-	
+	<h2>Programa de Becas Estratégicas</h2>
+	<!-- Declaracion de imagen, utilizando bootstrap -->
+	<img src="images/becaimg.jpg"
+		class="img-fluid rounded mx-auto d-block " alt="Becas Imagen"
+		title="Becas 2022">
+
+
+	<div class="text-center">
+		<p>El Programa de Becas, es un sistema de becas para promover el
+			acceso, la permanencia y la finalización de estudios de grado y
+			pregrado para el desarrollo económico del país y la igualdad social.</p>
+		<p>Las Becas tienen una duración de 12 meses, pueden renovarse
+			cada año hasta un máximo de 3 años en las carreras de pregrado y de 5
+			años en las carreras de grado.</p>
+		<p>Queremos acompañar a los y las jóvenes para que finalicen sus
+			estudios primarios o secundarios, que continúen en la educación
+			superior o se formen profesionalmente. Nuestro propósito es orientar
+			la acción estatal en el sentido de las necesidades de desarrollo y
+			crecimiento de la Argentina, garantizando condiciones igualitarias de
+			acceso a la educación, la permanencia y el egreso.</p>
+		<p>1914 translation by H. Rackham "But I must explain to you how
+			all this mistaken idea of denouncing pleasure and praising pain was
+			born and I will give you a complete account of the system, and
+			expound the actual teachings of the great explorer of the truth, the
+			master-builder of human happiness. No one rejects, dislikes, or
+			avoids pleasure itself, because it is pleasure, but because those who
+			do not know how to pursue pleasure rationally encounter consequences
+			that are extremely painful. Nor again is there anyone who loves or
+			pursues or desires to obtain pain of itself, because it is pain, but
+			because occasionally circumstances occur in which toil and pain can
+			procure him some great pleasure. To take a trivial example, which of
+			us ever undertakes laborious physical exercise, except to obtain some
+			advantage from it? But who has any right to find fault with a man who
+			chooses to enjoy a pleasure that has no annoying consequences, or one
+			who avoids a pain that produces no resultant pleasure?" Section
+			1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45
+			BC "At vero eos et accusamus et iusto odio dignissimos ducimus qui
+			blanditiis praesentium voluptatum deleniti atque corrupti quos
+			dolores et quas molestias excepturi sint occaecati cupiditate non
+			provident, similique sunt in culpa qui officia deserunt mollitia
+			animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis
+			est et expedita distinctio. Nam libero tempore, cum soluta nobis est
+			eligendi optio cumque nihil impedit quo minus id quod maxime placeat
+			facere possimus, omnis voluptas assumenda est, omnis dolor
+			repellendus. Temporibus autem quibusdam et aut officiis debitis aut
+			rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint
+			et molestiae non recusandae. Itaque earum rerum hic tenetur a
+			sapiente delectus, ut aut reiciendis voluptatibus maiores alias
+			consequatur aut perferendis doloribus asperiores repellat."</p>
+		<p>1914 translation by H. Rackham "But I must explain to you how
+			all this mistaken idea of denouncing pleasure and praising pain was
+			born and I will give you a complete account of the system, and
+			expound the actual teachings of the great explorer of the truth, the
+			master-builder of human happiness. No one rejects, dislikes, or
+			avoids pleasure itself, because it is pleasure, but because those who
+			do not know how to pursue pleasure rationally encounter consequences
+			that are extremely painful. Nor again is there anyone who loves or
+			pursues or desires to obtain pain of itself, because it is pain, but
+			because occasionally circumstances occur in which toil and pain can
+			procure him some great pleasure. To take a trivial example, which of
+			us ever undertakes laborious physical exercise, except to obtain some
+			advantage from it? But who has any right to find fault with a man who
+			chooses to enjoy a pleasure that has no annoying consequences, or one
+			who avoids a pain that produces no resultant pleasure?" Section
+			1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45
+			BC "At vero eos et accusamus et iusto odio dignissimos ducimus qui
+			blanditiis praesentium voluptatum deleniti atque corrupti quos
+			dolores et quas molestias excepturi sint occaecati cupiditate non
+			provident, similique sunt in culpa qui officia deserunt mollitia
+			animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis
+			est et expedita distinctio. Nam libero tempore, cum soluta nobis est
+			eligendi optio cumque nihil impedit quo minus id quod maxime placeat
+			facere possimus, omnis voluptas assumenda est, omnis dolor
+			repellendus. Temporibus autem quibusdam et aut officiis debitis aut
+			rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint
+			et molestiae non recusandae. Itaque earum rerum hic tenetur a
+			sapiente delectus, ut aut reiciendis voluptatibus maiores alias
+			consequatur aut perferendis doloribus asperiores repellat."</p>
+	</div>
+
+
+	<!-- Declaracion de lista, utilizando bootstrap. -->
+	<h3>Cursos con inscripción abierta</h3>
+	<ol>
+		<li><a th:href="@{/idiomas}">Idiomas</a></li>
+		<li><a href="#">Diseño</a></li>
+		<li><a href="#">Desarrollo</a></li>
+		<li><a href="#">Marketing</a></li>
+		<li><a href="#">Conferencias</a></li>
+	</ol>
 	<!-- Uso del fragmento footer-->
 	<footer th:replace="layouts/footer::ffooter"></footer>
 

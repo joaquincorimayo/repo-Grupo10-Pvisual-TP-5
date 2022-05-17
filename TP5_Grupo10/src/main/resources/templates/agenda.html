@@ -13,11 +13,11 @@
 <link type="text/css" href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-		<!-- Uso del fragmento header-->
+	<!-- Uso del fragmento header-->
 	<header th:replace="layouts/header::fheader"></header>
-	<h1>BECAS PV</h1>
-
-		<img alt="Calendario" src="images/date.png" title="Calendario 2022">
+	<!-- Declaracion de imagen, utilizando bootstrap -->
+	<img src="images/date.png" class="img-fluid rounded mx-auto d-block"
+		alt="Calendario" title="Calendario">
 
 	<article>
 		<section>
@@ -29,6 +29,7 @@
 		</section>
 		<video src="videos/video.mp4" controls="controls" ></video>
 	</article>
+	
 	<!-- Uso del fragmento footer-->
 	<footer th:replace="layouts/footer::ffooter"></footer>
 </body>
