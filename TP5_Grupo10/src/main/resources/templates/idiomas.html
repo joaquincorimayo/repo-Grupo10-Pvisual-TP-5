@@ -23,33 +23,27 @@
 		<h2>Idiomas</h2>
 		<p>Un idioma o lengua es un sistema de comunicación verbal o gestual, propia de una sociedad humana. Cada idioma se subdivide en dialectos, pero actualmente se duda que exista un criterio válido para hacer tal división de una manera objetiva y segura.</p>
 		<table>
-			<tr>
-				<th>Títuo del curso</th>
-				<th>Fecha Inicio</th>
-				<th>Horario</th>
-				<th>Fecha Fin</th>
-				<th>Virtual-Presencial</th>
-				<th>Docente</th>
-				<th>Duracion en semanas</th>
-			</tr>
-			<tr>
-				<td>FRANCÉS</td>
-				<td>29 sept</td>
-				<td>Mañana</td>
-				<td>22 dic</td>
-				<td>Virtual</td>
-				<td>Pepe</td>
-				<td>14</td>
-			</tr>
-			<tr>
-				<td>INGLÉS</td>
-				<td>14. sept</td>
-				<td>Tarde</td>
-				<td>22 dic</td>
-				<td>Virtual</td>
-				<td>Juan</td>
-				<td>19</td>
-			</tr>
+			<thead>
+				<tr>
+					<th>Título del curso</th>
+					<th>Inicio</th>
+					<th>Fin</th>
+					<th>Modalidad</th>
+					<th>Docente</th>
+					<th>Semanas</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="curso:${cursos}">
+					<td th:text="${curso.titulo}"></td>
+					<td th:text="${#temporals.format(curso.fechaInicio, 'dd-MM-yyyy')}"></td>
+					<td th:text="${#temporals.format(curso.fechaFin, 'dd-MM-yyyy')}"></td>
+					<td th:text="${curso.modalidad}"></td>
+					<td th:text="${curso.docente.nombre}"></td>
+					<td th:text="${curso.dos}"></td>
+				</tr>
+			</tbody>
 		</table>
 	</section>
 		<!-- Uso del fragmento footer-->
