@@ -1,24 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-<meta charset="utf-8">
-<title>Programacion visual - Idiomas</title>
+<meta charset="UTF-8">
+<title>Idiomas</title>
 </head>
 <body>
-	<header>
+
+	<!-- Uso del fragmento header-->
+	<header th:replace="layouts/header::fheader"></header>
 		<h1>Titulo idiomas</h1>
-		<img alt="Idiomas" src="../static/images/img_idioma.jpg" title="Idiomas">
-	</header>
-	
-	<!-- MENÚ DE NAVEGACIÓN -->
-	<nav>
-		<ul>
-			<li><a href="index.html">Inicio</a></li>
-			<li><a href="agenda.html">Agenda</a></li>
-			<li><a href="beneficios.html">Beneficios y Becas</a></li>
-			<li><a href="contacto.html">Contáctanos</a></li>
-		</ul>
-	</nav>
+		<img alt="Idiomas" src="images/img_idioma.jpg" title="Idiomas">
 
 	<section>
 		<h2>Idiomas</h2>
@@ -53,6 +44,7 @@
 			</tr>
 		</table>
 	</section>
-	
+		<!-- Uso del fragmento footer-->
+	<footer th:replace="layouts/footer::ffooter"></footer>
 </body>
 </html>

@@ -1,31 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Programacion Visual - Contactos</title>
+<title>Contactos</title>
 </head>
 <body>
 
-	<!-- ENCABEZADO -->
-	<header>
-		<h1>Facultad de Ingenieria</h1>
-		<img alt="Imagen de algo"
-			src="..\static\images\contacto.jpg"
-			title="Imagen pasaste el cursor">
-	</header>
+		<!-- Uso del fragmento header-->
+	<header th:replace="layouts/header::fheader"></header>
 	
-	<!-- MENÚ DE NAVEGACIÓN -->
-	<nav>
-		<ul>
-			<li><a href="index.html">Inicio</a></li>
-			<li><a href="agenda.html">Agenda</a></li>
-			<li><a href="beneficios.html">Beneficios y Becas</a></li>
-			<li><a href="contacto.html">Contáctanos</a></li>
-		</ul>
-	</nav>
+		<h1>Facultad de Ingenieria</h1>
+		
+		<img alt="Imagen de contacto"
+			src="images\contacto.jpg"
+			title="Imagen de contacto">
+	
 	
 	<!-- CARGA DE FORMULARIO -->
-	<form action="https://www.fi.unju.edu.ar/" method="post">
+	<form>
 		<label>Apellido y Nombre:</label>
 		<input id="idayn" type="text" name="appellidoynombre"/> 	<br /><br />
 		
@@ -59,12 +51,7 @@
 		<button type="submit">Enviar datos</button>
 	</form>
 
-
-	<!--  PIE DE PÁGINA -->
-	<footer>
-		<p>2022. Portal de Capacitación - Av. Gral. Manuel Belgrano 789 -
-			Teléfono (388) 999999 S. S. de Jujuy República Argentina.</p>
-	</footer>
-
+	<!-- Uso del fragmento footer-->
+	<footer th:replace="layouts/footer::ffooter"></footer>
 </body>
 </html>
