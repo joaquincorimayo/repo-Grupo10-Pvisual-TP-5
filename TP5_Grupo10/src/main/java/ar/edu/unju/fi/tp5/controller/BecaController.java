@@ -1,5 +1,7 @@
 package ar.edu.unju.fi.tp5.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +18,12 @@ import ar.edu.unju.fi.tp5.util.ListaBecas;
 @RequestMapping("/beca")
 public class BecaController {
 private ListaBecas listabeca = new ListaBecas();
-
+	Logger logger = LoggerFactory.getLogger(BecaController.class);
 	@GetMapping("/nuevo")
 	public String getFormularioBecaNuevoPage(Model model) {
 		model.addAttribute("beca", new Beca());
+		logger.info(
+				"Method: getFormularioBecaNuevoPage() - Information: Se envia un objeto Beca a la pagina nuevo_beca");
 		return "nuevo_beca";
 	}
 
@@ -27,7 +31,10 @@ private ListaBecas listabeca = new ListaBecas();
 	public ModelAndView getListaBecaPage(@ModelAttribute("beca") Beca beca) {
 		ModelAndView mav = new ModelAndView("lista_becas");
 		// recupero el arrayList y agrego un objeto becas a lista
-		listabeca.getBecas().add(beca);
+		if(listabeca.getBecas().add(beca)) {
+			logger.info("Method: getListaBecaPage() - Information: Se agregó un objeto al arrayList de beca");
+		}
+		
 			
 		// enviar el arrayList de beca a la página lista_becas
 		mav.addObject("becas", listabeca.getBecas());
@@ -36,6 +43,7 @@ private ListaBecas listabeca = new ListaBecas();
 	
 	@GetMapping("/listaBecas")
 	public ModelAndView getListadoBecaPage() {
+		logger.info("Method: getListadoBecaPage() - Information: Se visualiza las becas registradas");
 		ModelAndView mav = new ModelAndView("lista_becas");
 		mav.addObject("becas", listabeca.getBecas());
 		return mav;
