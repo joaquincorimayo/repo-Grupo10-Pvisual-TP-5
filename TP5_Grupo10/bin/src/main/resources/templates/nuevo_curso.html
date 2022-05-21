@@ -23,14 +23,12 @@
 			<label for="inputCodigo" class="col-sm-2 col-form-label">Codigo</label>
 				<div class="col-6">
 				<input type="number" class="form-control" id="inputCodigo" th:field="*{codigo}">
-				<div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></div>
 				</div>
 		</div>
 		<div class="row mb-3">
 			<label for="inputTitulo" class="col-sm-2 col-form-label">Titulo</label>
 			<div class="col-6">
 				<input type="text" class="form-control" id="inputTitulo" placeholder="Ingrese Titulo" th:field="*{titulo}">
-				<div class="text-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
 			</div>
 		</div>
 		<div class="row mb-3">
@@ -41,7 +39,6 @@
 					    <option value="Diploma Ciclo de Perfeccionamiento">Diploma Ciclo de Perfeccionamiento</option>
 					    <option value="Diploma Ciclo Superior">Diploma Ciclo Superior</option>
 					  </select>
-					  <div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
 			</div>
 		</div>
 		
@@ -49,7 +46,6 @@
 			<label for="inputInicio" class="col-sm-2 col-form-label">Fecha Inicio</label>
 			<div class="col-6">
 				<input type="date" class="form-control" id="inputInicio" th:field="*{fechaInicio}">
-				<div class="text-danger" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
 			</div>
 		</div>
 
@@ -57,7 +53,6 @@
 			<label for="inputFinal" class="col-sm-2 col-form-label">Fecha Final</label>
 				<div class="col-6">
 				<input type="date" class="form-control" id="inputFinal" th:field="*{fechaFin}" >
-				<div class="text-danger" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></div>
 			</div>
 		</div>
 
@@ -67,7 +62,6 @@
 			<label for="inputHoras" class="col-sm-2 col-form-label">Cantidad Horas</label>
 			<div class="col-6">
 				<input type="number" class="form-control" id="inputHoras" th:field="*{cantidadHoras}">
-				<div class="text-danger" th:if="${#fields.hasErrors('cantidadHoras')}" th:errors="*{cantidadHoras}"></div>
 			</div>
 		</div>
 
@@ -82,7 +76,7 @@
 					<input class="form-check-input" type="radio" name="gridRadios" id="inputPresencial" value="Presencial" th:field="*{modalidad}"> 
 					<label class="form-check-label" for="gridRadios2">Presencial</label>
 				</div>
-				<div class="text-danger" th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></div>
+
 			</div>
 		</div>
 		
@@ -95,7 +89,6 @@
 					    <option value="Perez">Martina Perez</option>
 					    <option value="Miranda">Pedro Miranda</option>
 					  </select>
-					  <div class="text-danger" th:if="${#fields.hasErrors('docente.apellido')}" th:errors="*{docente.apellido}"></div>
 			</div>
 		</div>
 
