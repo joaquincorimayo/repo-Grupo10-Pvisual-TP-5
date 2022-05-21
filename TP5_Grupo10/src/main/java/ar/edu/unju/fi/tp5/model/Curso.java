@@ -28,7 +28,7 @@ public class Curso {
 	@Future(message = "La fecha debe ser posterior a la actual")
 	private LocalDate fechaFin;
 	@Min(value = 1, message = "El valor mínimo es 1")
-	@Max(value = 5, message = "El valor máximo permitido es 9999")
+	@Max(value = 5, message = "El valor máximo permitido es 5")
 	private int cantidadHoras;
 	@NotEmpty(message = "La modalidad no puede estar vacia")
 	private String modalidad;
