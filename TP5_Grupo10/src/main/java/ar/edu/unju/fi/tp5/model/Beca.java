@@ -2,15 +2,30 @@ package ar.edu.unju.fi.tp5.model;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Beca {
+	@Min(value = 1, message = "El valor mínimo para el codigo es 1")
+	@Max(value = 9999, message = "El valor máximo permitido para el codigo es 9999")
 	private int codigo;
+	@NotEmpty(message="El nombre del curso no puede ser vacío")
 	private Curso curso;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate fechaFin;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
+	@FutureOrPresent(message = "La fecha debe ser hoy o posterior")
 	private LocalDate fechaInicio;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@NotNull
+	@Future(message = "La fecha debe ser posterior a la actual")
+	private LocalDate fechaFin;
+	@NotEmpty(message="El estado de la beca no puede ser vacío")
 	private String estado;
 
 	public Beca() {
