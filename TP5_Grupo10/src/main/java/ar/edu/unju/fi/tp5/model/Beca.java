@@ -15,7 +15,6 @@ public class Beca {
 	@Min(value = 1, message = "El valor mínimo para el codigo es 1")
 	@Max(value = 9999, message = "El valor máximo permitido para el codigo es 9999")
 	private int codigo;
-	@NotEmpty(message="El nombre del curso no puede ser vacío")
 	private Curso curso;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
@@ -27,7 +26,7 @@ public class Beca {
 	private LocalDate fechaFin;
 	@NotEmpty(message="El estado de la beca no puede ser vacío")
 	private String estado;
-
+	
 	public Beca() {
 		// TODO Auto-generated constructor stub
 	}

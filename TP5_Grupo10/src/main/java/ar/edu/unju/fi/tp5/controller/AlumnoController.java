@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import ar.edu.unju.fi.tp5.util.ListaAlumnos;
 @RequestMapping("/alumno")
 public class AlumnoController {
 	Logger logger = LoggerFactory.getLogger(AlumnoController.class);
+	//creo un objeto de la clase lista alumno, donde esta el arraylist
 	private ListaAlumnos listaAlumno = new ListaAlumnos();
 
 	@GetMapping("/nuevo")
@@ -28,9 +31,19 @@ public class AlumnoController {
 	}
 
 	@PostMapping("/guardar")
-	public ModelAndView getListaAlumnoPage(@ModelAttribute("alumno") Alumno alumno) {
-		ModelAndView mav = new ModelAndView("lista_alumnos");
+	public ModelAndView getListaAlumnoPage(@Validated @ModelAttribute("alumno") Alumno alumno, BindingResult bindingResult) {
+		//@Validate proviene de Spring Framework Validation
+		//el objeto bindingResult contiene el resultado de la validacion,
+		//(los errores que pueden haber ocurrido)
+		if (bindingResult.hasErrors()){
+			ModelAndView mav = new ModelAndView("nuevo_alumno");
+			mav.addObject("alumno", alumno);
+			return mav;
+		}
 		
+		ModelAndView mav = new ModelAndView("lista_alumnos");
+
+		//recupero el arraylist y agrego un objeto aluimno a la lista
 		if(this.listaAlumno.getAlumnos().add(alumno)) {
 			logger.info("Method: getListaAlumnoPage() - Information: Se agregó un objeto al arrayList de alumno");
 		}

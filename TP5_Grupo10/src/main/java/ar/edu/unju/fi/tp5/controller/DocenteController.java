@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +32,16 @@ public class DocenteController {
 	}
 
 	@PostMapping("/guardar")
-	public ModelAndView getListaDocentePage(@ModelAttribute("docente") Docente docente) {
+	public ModelAndView getListaDocentePage(@Validated @ModelAttribute("docente") Docente docente, BindingResult bindingResult) {
+		//@Validate proviene de Spring Framework Validation
+		//el objeto bindingResult contiene el resultado de la validacion,
+		//(los errores que pueden haber ocurrido)
+		if (bindingResult.hasErrors()){
+			ModelAndView mav = new ModelAndView("nuevo_docente");
+			mav.addObject("docente", docente);
+			return mav;
+		}
+		
 		// Pagina que voy a devolver
 		ModelAndView mav = new ModelAndView("lista_docentes");
 		// Realiza la carga de un nuevo objeto (docente 'cargado')
