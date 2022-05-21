@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +31,22 @@ public class CursoController {
 	}
 	
 	@PostMapping("/guardar")
-	public ModelAndView getListaCursoPage(@ModelAttribute("curso") Curso curso) {
-		ModelAndView mav = new ModelAndView("lista_cursos");
+	public ModelAndView getListaCursoPage(@Validated @ModelAttribute("curso") Curso curso, BindingResult bindingResult) {
+		//@Validate proviene de Spring Framework Validation
+		//el objeto bindingResult contiene el resultado de la validacion,
+		//(los errores que pueden haber ocurrido)
+		if (bindingResult.hasErrors()){
+			ModelAndView mav = new ModelAndView("nuevo_curso");
+			mav.addObject("curso", curso);
+			return mav;
+		}
 		
+		ModelAndView mav = new ModelAndView("lista_cursos");
+		// recupero el arrayList y agrego un objeto curso a lista
 		if(listaCurso.getCursos().add(curso)) {
 			logger.info("Method: getListaCursoPage() - Information: Se agregó un objeto al arrayList de curso");
 		}
-		
+		// enviar el arrayList a curso a la página lista_cursos
 		mav.addObject("cursos", listaCurso.getCursos());
 		return mav;
 	}
@@ -47,7 +58,4 @@ public class CursoController {
 		mav.addObject("cursos", listaCurso.getCursos());
 		return mav;
 	}
-	
-	
-
 }
