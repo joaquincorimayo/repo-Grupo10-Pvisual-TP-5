@@ -5,6 +5,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.stereotype.Component;
+@Component
 public class Docente {
 	@Min(value=1000, message="El legajo del docente debe ser mayor o igual a 1.000")
 	private int legajo;
