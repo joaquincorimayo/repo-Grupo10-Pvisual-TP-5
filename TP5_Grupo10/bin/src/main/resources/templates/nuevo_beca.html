@@ -24,6 +24,7 @@
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputCodigo"
 					th:field="*{codigo}">
+				<div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></div>
 			</div>
 		</div>
 		<div class="row mb-3">
@@ -31,6 +32,7 @@
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputCurso"
 					th:field="*{curso.titulo}">
+<!-- 				<div class="text-danger" th:if="${#fields.hasErrors('curso.titulo')}" th:errors="*{curso.titulo}"></div> -->
 			</div>
 		</div>
 		
@@ -39,6 +41,7 @@
 			<div class="col-sm-10">
 				<input type="date" class="form-control" id="FechaInicio"
 					th:field="*{fechaInicio}">
+				<div class="text-danger" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
 			</div>
 		</div>
 		
@@ -47,6 +50,7 @@
 			<div class="col-sm-10">
 				<input type="date" class="form-control" id="inputFechaFin"
 					th:field="*{fechaFin}">
+				<div class="text-danger" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></div>
 			</div>
 		</div>
 
@@ -55,6 +59,7 @@
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputEstado"
 					th:field="*{estado}">
+				<div class="text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></div>
 			</div>
 		</div>
 

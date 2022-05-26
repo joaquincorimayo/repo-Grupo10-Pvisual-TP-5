@@ -16,7 +16,7 @@
 	<!-- Uso del fragmento header-->
 	<header th:replace="layouts/header::fheader"></header>
 	
-	<div class="container">
+	<div class="container text-center">
 		<br>
 		<p class="h4 mb-10">Lista Cursos</p>
 		<br>
@@ -38,6 +38,7 @@
 					<th>Horas</th>
 					<th>Modalidad</th>
 					<th>Docente</th>
+					<th>Opciones</th>
 				</tr>
 				<tr th:each="curso: ${cursos}">
 					<td th:text="${curso.codigo}"></td>
