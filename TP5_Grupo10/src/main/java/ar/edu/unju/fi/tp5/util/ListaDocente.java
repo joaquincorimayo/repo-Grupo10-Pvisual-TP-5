@@ -2,8 +2,11 @@ package ar.edu.unju.fi.tp5.util;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.unju.fi.tp5.model.Docente;
 
+@Component
 public class ListaDocente {
 	/*
 	 * Clase que gestiona la lista de docentes.

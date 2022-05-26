@@ -3,9 +3,12 @@ package ar.edu.unju.fi.tp5.util;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
 import ar.edu.unju.fi.tp5.model.Curso;
 import ar.edu.unju.fi.tp5.model.Docente;
 
+@Component
 public class ListaCursos {
 	/*
 	 * Clase que gestiona la lista de Cursos.
