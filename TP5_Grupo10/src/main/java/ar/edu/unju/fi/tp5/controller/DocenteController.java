@@ -2,6 +2,8 @@ package ar.edu.unju.fi.tp5.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,19 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unju.fi.tp5.model.Docente;
-import ar.edu.unju.fi.tp5.util.ListaDocente;
+import ar.edu.unju.fi.tp5.service.IDocenteService;
 
 @Controller
 @RequestMapping("/docente")
 public class DocenteController {
+	
+	@Autowired
+	@Qualifier("DocenteServiceImpList")
+	private IDocenteService docenteService;
+	
 	Logger logger = LoggerFactory.getLogger(DocenteController.class);
-	// Permite mantener consistencia.
-	private ListaDocente listaDocente = new ListaDocente();
 
 	@GetMapping("/nuevo")
 	public String getFormularioDocenteNuevoPage(Model model) {
 		// Se envia un objeto de tipo Docente a la pagina nuevo_docente.html
-		model.addAttribute("docente", new Docente());
+		model.addAttribute("docente", docenteService.getDocente());
 		logger.info(
 				"Method: getFormularioDocenteNuevoPage() - Information: Se envia un objeto Docente a la pagina nuevo_docente");
 		return "nuevo_docente";
@@ -45,12 +50,12 @@ public class DocenteController {
 		// Pagina que voy a devolver
 		ModelAndView mav = new ModelAndView("lista_docentes");
 		// Realiza la carga de un nuevo objeto (docente 'cargado')
-		if(listaDocente.getDocentes().add(docente)) {
+		if(docenteService.guardarDocente(docente)) {
 			logger.info("Method: getListaDocentePage() - Information: Se agregó un objeto al arrayList de docente");
 		}
 		
 		// Envia el ArrayList de docentes a la pagina lista_docentes
-		mav.addObject("docentes", listaDocente.getDocentes());
+		mav.addObject("docentes", docenteService.getListaDocente().getDocentes());
 		return mav;
 	}
 
@@ -59,7 +64,7 @@ public class DocenteController {
 		logger.info("Method: getListadoDocentePage() - Information: Se visualiza los docentes registrados");
 		// Permite visualizar docentes que contiene el arraylist
 		ModelAndView mav = new ModelAndView("lista_docentes");
-		mav.addObject("docentes", listaDocente.getDocentes());
+		mav.addObject("docentes", docenteService.getListaDocente().getDocentes());
 		return mav;
 	}
 
