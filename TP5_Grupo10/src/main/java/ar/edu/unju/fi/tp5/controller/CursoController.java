@@ -10,25 +10,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import ar.edu.unju.fi.tp5.model.Curso;
 import ar.edu.unju.fi.tp5.service.ICursoService;
-
 
 @Controller
 @RequestMapping("/curso")
 public class CursoController {
-	
+
 	@Autowired
 	@Qualifier("CursoServiceImpList")
 	private ICursoService cursoService;
-	
+
 	Logger logger = LoggerFactory.getLogger(CursoController.class);
-	
+
 	@GetMapping("/nuevo")
 	public String getFormularioCursoNuevoPage(Model model) {
 		model.addAttribute("curso", cursoService.getCurso());
@@ -36,28 +35,24 @@ public class CursoController {
 				"Method: getFormularioCursoNuevoPage() - Information: Se envia un objeto Curso a la pagina nuevo_curso");
 		return "nuevo_curso";
 	}
-	
+
 	@PostMapping("/guardar")
-	public ModelAndView getListaCursoPage(@Validated @ModelAttribute("curso") Curso curso, BindingResult bindingResult) {
-		//@Validate proviene de Spring Framework Validation
-		//el objeto bindingResult contiene el resultado de la validacion,
-		//(los errores que pueden haber ocurrido)
-		if (bindingResult.hasErrors()){
+	public ModelAndView getListaCursoPage(@Validated @ModelAttribute("curso") Curso curso,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
 			ModelAndView mav = new ModelAndView("nuevo_curso");
 			mav.addObject("curso", curso);
 			return mav;
 		}
-		
+
 		ModelAndView mav = new ModelAndView("lista_cursos");
-		// recupero el arrayList y agrego un objeto curso a lista
-		if(cursoService.guardarCurso(curso)) {
+		if (cursoService.guardarCurso(curso)) {
 			logger.info("Method: getListaCursoPage() - Information: Se agregó un objeto al arrayList de curso");
 		}
-		// enviar el arrayList a curso a la página lista_cursos
 		mav.addObject("cursos", cursoService.getListaCursos().getCursos());
 		return mav;
 	}
-	
+
 	@GetMapping("/listaCursos")
 	public ModelAndView getListaCursosPage() {
 		logger.info("Method: getListadoCursoPage() - Information: Se visualiza los cursos registrados");
@@ -65,4 +60,39 @@ public class CursoController {
 		mav.addObject("cursos", cursoService.getListaCursos().getCursos());
 		return mav;
 	}
+
+	// Peticiones de editar y eliminar
+
+	@GetMapping("/editar/{codigo}")
+	public ModelAndView getEditarCursoPage(@PathVariable(value = "codigo") int codigo) {
+		logger.info("Method: getEditarCursoPage() - Information: ");
+		ModelAndView mav = new ModelAndView("edicion_curso");
+		Curso curso = cursoService.buscarCurso(codigo);
+		mav.addObject("curso", curso);
+		return mav;
+	}
+
+	@PostMapping("/modificar")
+	public ModelAndView editarDatosCurso(@Validated @ModelAttribute("curso") Curso curso, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			logger.info("Method: editarDatosCurso() - Information: Error");
+			ModelAndView mav = new ModelAndView("edicion_curso");
+			mav.addObject("curso", curso);
+			return mav;
+		}
+
+		ModelAndView mav = new ModelAndView("redirect:/curso/listaCursos");
+		cursoService.modificarCurso(curso);
+		return mav;
+	}
+
+	@GetMapping("/eliminar/{codigo}")
+	public ModelAndView eliminarDatosCurso(@PathVariable(value = "codigo") int codigo) {
+		logger.info("Method: eliminarDatosCurso() - Information: ");
+		ModelAndView mav = new ModelAndView("redirect:/curso/listaCursos");
+		cursoService.eliminarCurso(codigo);
+		return mav;
+	}
+
 }

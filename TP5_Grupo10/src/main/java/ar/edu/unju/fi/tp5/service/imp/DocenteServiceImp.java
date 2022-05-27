@@ -24,31 +24,42 @@ public class DocenteServiceImp implements IDocenteService {
 	@Override
 	public boolean guardarDocente(Docente docente) {
 		// guarda un objeto alumno en la lista de docente
-		return listaDocentes.getDocentes().add(docente);
+		return this.listaDocentes.getDocentes().add(docente);
 	}
 
 	@Override
 	public void modificarDocente(Docente docente) {
-		// TODO Auto-generated method stub
+		for (Docente doc: this.listaDocentes.getDocentes()) {
+			if (doc.getLegajo() == docente.getLegajo()) {
+				doc.setLegajo(docente.getLegajo());
+				doc.setNombre(docente.getNombre());
+				doc.setApellido(docente.getApellido());
+				doc.setEmail(docente.getEmail());
+				doc.setTelefono(docente.getTelefono());
+			}
+		}
 
 	}
 
 	@Override
 	public void eliminarDocente(int legajo) {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < this.listaDocentes.getDocentes().size(); i++) {
+			if (this.listaDocentes.getDocentes().get(i).getLegajo() == legajo) {
+				this.listaDocentes.getDocentes().remove(i);
+			}
+		}
 	}
 
 	@Override
 	public ListaDocente getListaDocente() {
 		// retorna el objeto que accede a la lista de docentes
-		return listaDocentes;  
+		return this.listaDocentes;  
 	}
 
 	@Override
 	public Docente buscarDocente(int legajo) {
 		// busca docente por legajo y devuelve el objeto asociado al legajo del docente
-		Optional<Docente> docente = listaDocentes.getDocentes().stream().filter(a -> a.getLegajo() == legajo).findFirst();
+		Optional<Docente> docente = this.listaDocentes.getDocentes().stream().filter(a -> a.getLegajo() == legajo).findFirst();
 		return docente.get();
 	}
 

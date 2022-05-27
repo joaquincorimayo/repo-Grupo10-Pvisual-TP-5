@@ -1,7 +1,5 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,42 +11,58 @@ import ar.edu.unju.fi.tp5.util.ListaAlumnos;
 public class AlumnoServiceImp implements IAlumnoService {
 
 	@Autowired
-	private ListaAlumnos listaAlumnos;
-	
+	private ListaAlumnos listaAlumnos; // ID
+
 	@Override
 	public Alumno getAlumno() {
-		// retorna un objeto de la clase Alumno	
 		return new Alumno();
 	}
 
 	@Override
 	public boolean guardarAlumno(Alumno alumno) {
-		// guarda un objeto alumno en la lista de alumno
-		return listaAlumnos.getAlumnos().add(alumno);
+		return this.listaAlumnos.getAlumnos().add(alumno);
 	}
 
 	@Override
 	public void modificarAlumno(Alumno alumno) {
-		// TODO Auto-generated method stub
-
+		for (Alumno alm : this.listaAlumnos.getAlumnos()) {
+			if (alm.getDni().equals(alumno.getDni())) {
+				alm.setApellido(alumno.getApellido());
+				alm.setDni(alumno.getDni());
+				alm.setEmail(alumno.getEmail());
+				alm.setNombre(alumno.getNombre());
+				alm.setTelefono(alumno.getTelefono());
+			}
+		}
 	}
 
 	@Override
 	public void eliminarAlumno(String dni) {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < this.listaAlumnos.getAlumnos().size(); i++) {
+			if (this.listaAlumnos.getAlumnos().get(i).getDni().equals(dni)) {
+				this.listaAlumnos.getAlumnos().remove(i);
+				// i--;
+			}
+		}
 	}
 
 	@Override
 	public ListaAlumnos getListaAlumnos() {
-		// retorna el objeto que accede a  la lista de alumno
-		return listaAlumnos;
+		return this.listaAlumnos;
 	}
 
 	@Override
 	public Alumno buscarAlumno(String dni) {
-		// busca al alumno por dni y devuelve el objeto asociado al dni
-		Optional<Alumno> alumno = listaAlumnos.getAlumnos().stream().filter(a -> a.getDni() == dni).findFirst();
-		return alumno.get();
+		Alumno devolverAlumno = new Alumno();
+		for (Alumno alm : this.listaAlumnos.getAlumnos()) {
+			if (alm.getDni().equals(dni)) {
+				devolverAlumno.setApellido(alm.getApellido());
+				devolverAlumno.setDni(alm.getDni());
+				devolverAlumno.setEmail(alm.getEmail());
+				devolverAlumno.setNombre(alm.getNombre());
+				devolverAlumno.setTelefono(alm.getTelefono());
+			}
+		}
+		return devolverAlumno;
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,18 +18,17 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unju.fi.tp5.model.Beca;
 import ar.edu.unju.fi.tp5.service.IBecaService;
 
-
 @Controller
 @RequestMapping("/beca")
 public class BecaController {
-	
+
 	@Autowired
 	@Qualifier("BecaServiceImpList")
 	private IBecaService becaService;
-	
+
 	// private ListaBecas listabeca = new ListaBecas();
 	Logger logger = LoggerFactory.getLogger(BecaController.class);
-	
+
 	@GetMapping("/nuevo")
 	public String getFormularioBecaNuevoPage(Model model) {
 		model.addAttribute("beca", becaService.getBeca());
@@ -39,31 +39,59 @@ public class BecaController {
 
 	@PostMapping("/guardar")
 	public ModelAndView getListaBecaPage(@Validated @ModelAttribute("beca") Beca beca, BindingResult bindingResult) {
-		//@Validate proviene de Spring Framework Validation
-		//el objeto bindingResult contiene el resultado de la validacion,
-		//(los errores que pueden haber ocurrido)
-		if (bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			ModelAndView mav = new ModelAndView("nuevo_beca");
 			mav.addObject("beca", beca);
 			return mav;
 		}
-		 
+
 		ModelAndView mav = new ModelAndView("lista_becas");
-		// recupero el arrayList y agrego un objeto becas a lista
-		if(becaService.guardarBeca(beca)) {
+		if (becaService.guardarBeca(beca)) {
 			logger.info("Method: getListaBecaPage() - Information: Se agregó un objeto al arrayList de beca");
 		}
-			
-		// enviar el arrayList de beca a la página lista_becas
 		mav.addObject("becas", becaService.getListaBecas().getBecas());
 		return mav;
 	}
-	
+
 	@GetMapping("/listaBecas")
 	public ModelAndView getListadoBecaPage() {
 		logger.info("Method: getListadoBecaPage() - Information: Se visualiza las becas registradas");
 		ModelAndView mav = new ModelAndView("lista_becas");
 		mav.addObject("becas", becaService.getListaBecas().getBecas());
+		return mav;
+	}
+	
+	// Peticiones de editar y eliminar
+
+	@GetMapping("/editar/{codigo}")
+	public ModelAndView getEditarBecaPage(@PathVariable(value = "codigo") int codigo) {
+		logger.info("Method: getEditarBecaPage() - Information: ");
+		ModelAndView mav = new ModelAndView("edicion_beca");
+		Beca beca = becaService.buscarBeca(codigo);
+		mav.addObject("beca", beca);
+		return mav;
+	}
+
+	@PostMapping("/modificar")
+	public ModelAndView editarDatosBeca(@Validated @ModelAttribute("beca") Beca beca,
+			BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			logger.info("Method: editarDatosBeca() - Information: Error");
+			ModelAndView mav = new ModelAndView("edicion_beca");
+			mav.addObject("beca", beca);
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView("redirect:/beca/listaBecas");
+		becaService.modificarBeca(beca);
+		return mav;
+	}
+
+	@GetMapping("/eliminar/{codigo}")
+	public ModelAndView eliminarDatosBeca(@PathVariable(value = "codigo") int codigo) {
+		logger.info("Method: eliminarDatosBeca() - Information: ");
+		ModelAndView mav = new ModelAndView("redirect:/beca/listaBecas");
+		becaService.eliminarBeca(codigo);
 		return mav;
 	}
 

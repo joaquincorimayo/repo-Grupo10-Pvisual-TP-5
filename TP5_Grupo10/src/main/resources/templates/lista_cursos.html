@@ -28,7 +28,7 @@
 		<br>
 		
 		<div class="col-12 d-flex justify-content-center">
-			<table class="table table-striped table-hover">
+			<table class="table table-striped table-hover border">
 				<tr>
 					<th>Codigo</th>
 					<th>Titulo</th>
@@ -55,8 +55,8 @@
 						</p>
 					</td>
 					<td>
-						<a href="#" id="editarDocente" class="btn btn-warning">Editar</a>
-						<a href="#" id="eliminarDocente" class="btn btn-danger">Eliminar</a>
+						<a th:href="@{/curso/editar/}+${curso.codigo}" id="editarCurso" class="btn btn-warning">Editar</a>
+						<a th:href="@{/curso/eliminar/}+${curso.codigo}" id="eliminarCurso" class="btn btn-danger">Eliminar</a>
 					</td>
 				</tr>
 			</table>
