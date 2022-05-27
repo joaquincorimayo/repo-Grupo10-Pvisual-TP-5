@@ -2,6 +2,8 @@ package ar.edu.unju.fi.tp5.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,17 +16,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import ar.edu.unju.fi.tp5.model.Curso;
-import ar.edu.unju.fi.tp5.util.ListaCursos;
+import ar.edu.unju.fi.tp5.service.ICursoService;
+
 
 @Controller
 @RequestMapping("/curso")
 public class CursoController {
+	
+	@Autowired
+	@Qualifier("CursoServiceImpList")
+	private ICursoService cursoService;
+	
 	Logger logger = LoggerFactory.getLogger(CursoController.class);
-	private ListaCursos listaCurso = new ListaCursos();
 	
 	@GetMapping("/nuevo")
 	public String getFormularioCursoNuevoPage(Model model) {
-		model.addAttribute("curso", new Curso());
+		model.addAttribute("curso", cursoService.getCurso());
 		logger.info(
 				"Method: getFormularioCursoNuevoPage() - Information: Se envia un objeto Curso a la pagina nuevo_curso");
 		return "nuevo_curso";
@@ -43,11 +50,11 @@ public class CursoController {
 		
 		ModelAndView mav = new ModelAndView("lista_cursos");
 		// recupero el arrayList y agrego un objeto curso a lista
-		if(listaCurso.getCursos().add(curso)) {
+		if(cursoService.guardarCurso(curso)) {
 			logger.info("Method: getListaCursoPage() - Information: Se agregó un objeto al arrayList de curso");
 		}
 		// enviar el arrayList a curso a la página lista_cursos
-		mav.addObject("cursos", listaCurso.getCursos());
+		mav.addObject("cursos", cursoService.getListaCursos().getCursos());
 		return mav;
 	}
 	
@@ -55,7 +62,7 @@ public class CursoController {
 	public ModelAndView getListaCursosPage() {
 		logger.info("Method: getListadoCursoPage() - Information: Se visualiza los cursos registrados");
 		ModelAndView mav = new ModelAndView("lista_cursos");
-		mav.addObject("cursos", listaCurso.getCursos());
+		mav.addObject("cursos", cursoService.getListaCursos().getCursos());
 		return mav;
 	}
 }

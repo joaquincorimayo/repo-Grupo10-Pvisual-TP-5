@@ -2,6 +2,8 @@ package ar.edu.unju.fi.tp5.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,18 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unju.fi.tp5.model.Alumno;
-import ar.edu.unju.fi.tp5.util.ListaAlumnos;
+import ar.edu.unju.fi.tp5.service.IAlumnoService;
+
 
 @Controller
 @RequestMapping("/alumno")
 public class AlumnoController {
+	
+	@Autowired
+	@Qualifier("AlumnoServiceImpList")
+	private IAlumnoService alumnoService;
+	
 	Logger logger = LoggerFactory.getLogger(AlumnoController.class);
-	//creo un objeto de la clase lista alumno, donde esta el arraylist
-	private ListaAlumnos listaAlumno = new ListaAlumnos();
 
 	@GetMapping("/nuevo")
 	public String getFormularioAlumnoNuevoPage(Model model) {
-		model.addAttribute("alumno", new Alumno());
+		model.addAttribute("alumno", alumnoService.getAlumno());
 		logger.info(
 				"Method: getFormularioAlumnoNuevoPage() - Information: Se envia un objeto Alumno a la pagina nuevo_alumno");
 		return "nuevo_alumno";
@@ -44,12 +50,12 @@ public class AlumnoController {
 		ModelAndView mav = new ModelAndView("lista_alumnos");
 
 		//recupero el arraylist y agrego un objeto aluimno a la lista
-		if(this.listaAlumno.getAlumnos().add(alumno)) {
+		if(alumnoService.guardarAlumno(alumno)) {
 			logger.info("Method: getListaAlumnoPage() - Information: Se agregó un objeto al arrayList de alumno");
 		}
 		
 		// enviar el arrayList de alumno a la página lista_alumnos
-		mav.addObject("alumnos", this.listaAlumno.getAlumnos());
+		mav.addObject("alumnos", alumnoService.getListaAlumnos().getAlumnos());
 		return mav;
 	}
 
@@ -57,7 +63,7 @@ public class AlumnoController {
 	public ModelAndView getListadoAlumnoPage() {
 		logger.info("Method: getListadoAlumnoPage() - Information: Se visualiza los alumnos registrados");
 		ModelAndView mav = new ModelAndView("lista_alumnos");
-		mav.addObject("alumnos", this.listaAlumno.getAlumnos());
+		mav.addObject("alumnos", alumnoService.getListaAlumnos().getAlumnos());
 		return mav;
 	}
 

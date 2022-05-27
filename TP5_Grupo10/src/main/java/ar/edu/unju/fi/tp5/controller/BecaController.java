@@ -2,6 +2,8 @@ package ar.edu.unju.fi.tp5.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,17 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unju.fi.tp5.model.Beca;
-import ar.edu.unju.fi.tp5.util.ListaBecas;
+import ar.edu.unju.fi.tp5.service.IBecaService;
 
 
 @Controller
 @RequestMapping("/beca")
 public class BecaController {
-private ListaBecas listabeca = new ListaBecas();
+	
+	@Autowired
+	@Qualifier("BecaServiceImpList")
+	private IBecaService becaService;
+	
+	// private ListaBecas listabeca = new ListaBecas();
 	Logger logger = LoggerFactory.getLogger(BecaController.class);
+	
 	@GetMapping("/nuevo")
 	public String getFormularioBecaNuevoPage(Model model) {
-		model.addAttribute("beca", new Beca());
+		model.addAttribute("beca", becaService.getBeca());
 		logger.info(
 				"Method: getFormularioBecaNuevoPage() - Information: Se envia un objeto Beca a la pagina nuevo_beca");
 		return "nuevo_beca";
@@ -42,12 +50,12 @@ private ListaBecas listabeca = new ListaBecas();
 		 
 		ModelAndView mav = new ModelAndView("lista_becas");
 		// recupero el arrayList y agrego un objeto becas a lista
-		if(listabeca.getBecas().add(beca)) {
+		if(becaService.guardarBeca(beca)) {
 			logger.info("Method: getListaBecaPage() - Information: Se agregó un objeto al arrayList de beca");
 		}
 			
 		// enviar el arrayList de beca a la página lista_becas
-		mav.addObject("becas", listabeca.getBecas());
+		mav.addObject("becas", becaService.getListaBecas().getBecas());
 		return mav;
 	}
 	
@@ -55,7 +63,7 @@ private ListaBecas listabeca = new ListaBecas();
 	public ModelAndView getListadoBecaPage() {
 		logger.info("Method: getListadoBecaPage() - Information: Se visualiza las becas registradas");
 		ModelAndView mav = new ModelAndView("lista_becas");
-		mav.addObject("becas", listabeca.getBecas());
+		mav.addObject("becas", becaService.getListaBecas().getBecas());
 		return mav;
 	}
 
