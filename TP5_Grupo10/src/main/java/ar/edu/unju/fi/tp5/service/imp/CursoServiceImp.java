@@ -14,41 +14,51 @@ public class CursoServiceImp implements ICursoService {
 
 	@Autowired
 	private ListaCursos listaCursos;
-	
+
 	@Override
 	public Curso getCurso() {
-		// retorna un objeto de la clase Curso
 		return new Curso();
 	}
 
 	@Override
 	public boolean guardarCurso(Curso curso) {
-		// guarda un objeto alumno en la lista de curso
-		return listaCursos.getCursos().add(curso);
+		return this.listaCursos.getCursos().add(curso);
 	}
 
 	@Override
 	public void modificarCurso(Curso curso) {
-		// TODO Auto-generated method stub
-
+		for (Curso cur : this.listaCursos.getCursos()) {
+			if (cur.getCodigo() == curso.getCodigo()) {
+				cur.setCantidadHoras(curso.getCantidadHoras());
+				cur.setCategoria(curso.getCategoria());
+				cur.setCodigo(curso.getCodigo());
+				cur.setDocente(curso.getDocente());
+				cur.setDos(curso.getDos());
+				cur.setFechaFin(curso.getFechaFin());
+				cur.setFechaInicio(curso.getFechaInicio());
+				cur.setModalidad(curso.getModalidad());
+				cur.setTitulo(curso.getTitulo());
+			}
+		}
 	}
 
 	@Override
 	public void eliminarCurso(int codigo) {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < this.listaCursos.getCursos().size(); i++) {
+			if (this.listaCursos.getCursos().get(i).getCodigo() == codigo) {
+				this.listaCursos.getCursos().remove(i);
+			}
+		}
 	}
 
 	@Override
 	public ListaCursos getListaCursos() {
-		// retorna el objeto que accede a la lista de cursos
-		return listaCursos;
+		return this.listaCursos;
 	}
 
 	@Override
 	public Curso buscarCurso(int codigo) {
-		// busca la beca por codigo y devuelve el objeto asociado al codigo de beca
-		Optional<Curso> curso = listaCursos.getCursos().stream().filter(a -> a.getCodigo() == codigo).findFirst();
+		Optional<Curso> curso = this.listaCursos.getCursos().stream().filter(a -> a.getCodigo() == codigo).findFirst();
 		return curso.get();
 	}
 

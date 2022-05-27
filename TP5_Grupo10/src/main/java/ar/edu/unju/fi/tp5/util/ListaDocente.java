@@ -15,10 +15,10 @@ public class ListaDocente {
 
 	public ListaDocente() {
 		docentes = new ArrayList<Docente>();
-		docentes.add(new Docente(100, "Alejandro", "Sanchez", "asanchez@mail.com", "3884789562"));
-		docentes.add(new Docente(101, "María", "Lamas", "mlamas@mail.com", "3884895210"));
-		docentes.add(new Docente(102, "Martina Adriana", "Perez", "mperez@mail.com", "3884120130"));
-		docentes.add(new Docente(103, "Pedro Antonio", "Miranda", "pmiranda@mail.com", "3884111999"));
+		docentes.add(new Docente(1000, "Alejandro", "Sanchez", "asanchez@mail.com", "3884789562"));
+		docentes.add(new Docente(1010, "María", "Lamas", "mlamas@mail.com", "3884895210"));
+		docentes.add(new Docente(1002, "Martina Adriana", "Perez", "mperez@mail.com", "3884120130"));
+		docentes.add(new Docente(1003, "Pedro Antonio", "Miranda", "pmiranda@mail.com", "3884111999"));
 	}
 
 	public ArrayList<Docente> getDocentes() {

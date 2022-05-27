@@ -14,41 +14,47 @@ public class BecaServiceImp implements IBecaService {
 
 	@Autowired
 	private ListaBecas listaBecas;
-	
+
 	@Override
 	public Beca getBeca() {
-		// retorna un objeto de la clase Beca	
 		return new Beca();
 	}
 
 	@Override
 	public boolean guardarBeca(Beca beca) {
-		// guarda un objeto alumno en la lista de beca
 		return listaBecas.getBecas().add(beca);
-		
+
 	}
 
 	@Override
 	public void modificarBeca(Beca beca) {
-		// TODO Auto-generated method stub
-
+		for (Beca bc : this.listaBecas.getBecas()) {
+			if (bc.getCodigo() == beca.getCodigo()) {
+				bc.setCodigo(beca.getCodigo());
+				bc.setCurso(beca.getCurso());
+				bc.setEstado(beca.getEstado());
+				bc.setFechaFin(beca.getFechaFin());
+				bc.setFechaInicio(beca.getFechaInicio());
+			}
+		}
 	}
 
 	@Override
 	public void eliminarBeca(int codigo) {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < this.listaBecas.getBecas().size(); i++) {
+			if (this.listaBecas.getBecas().get(i).getCodigo() == codigo) {
+				this.listaBecas.getBecas().remove(i);
+			}
+		}
 	}
 
 	@Override
 	public ListaBecas getListaBecas() {
-		// retorna el objeto que accede a la lista de becas
 		return listaBecas;
 	}
 
 	@Override
 	public Beca buscarBeca(int codigo) {
-		// busca la beca por codigo y devuelve el objeto asociado al codigo de beca
 		Optional<Beca> beca = listaBecas.getBecas().stream().filter(a -> a.getCodigo() == codigo).findFirst();
 		return beca.get();
 	}
