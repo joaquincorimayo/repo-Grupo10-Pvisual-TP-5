@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unju.fi.tp5.model.Alumno;
+import ar.edu.unju.fi.tp5.entity.Alumno;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
 
 

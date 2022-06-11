@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.unju.fi.tp5.model.Curso;
+import ar.edu.unju.fi.tp5.entity.Curso;
 import ar.edu.unju.fi.tp5.service.ICursoService;
 
 @Controller

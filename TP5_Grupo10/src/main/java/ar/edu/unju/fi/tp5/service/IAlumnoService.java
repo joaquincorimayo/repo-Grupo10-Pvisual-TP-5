@@ -1,6 +1,6 @@
 package ar.edu.unju.fi.tp5.service;
 
-import ar.edu.unju.fi.tp5.model.Alumno;
+import ar.edu.unju.fi.tp5.entity.Alumno;
 import ar.edu.unju.fi.tp5.util.ListaAlumnos;
 
 public interface IAlumnoService {
