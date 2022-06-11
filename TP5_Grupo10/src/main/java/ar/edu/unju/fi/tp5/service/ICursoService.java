@@ -1,6 +1,6 @@
 package ar.edu.unju.fi.tp5.service;
 
-import ar.edu.unju.fi.tp5.model.Curso;
+import ar.edu.unju.fi.tp5.entity.Curso;
 import ar.edu.unju.fi.tp5.util.ListaCursos;
 
 public interface ICursoService {

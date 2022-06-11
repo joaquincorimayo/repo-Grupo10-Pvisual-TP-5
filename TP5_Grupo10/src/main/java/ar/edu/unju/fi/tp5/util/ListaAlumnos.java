@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import ar.edu.unju.fi.tp5.model.Alumno;
+import ar.edu.unju.fi.tp5.entity.Alumno;
 
 @Component
 public class ListaAlumnos {

@@ -1,6 +1,6 @@
 package ar.edu.unju.fi.tp5.service;
 
-import ar.edu.unju.fi.tp5.model.Beca;
+import ar.edu.unju.fi.tp5.entity.Beca;
 import ar.edu.unju.fi.tp5.util.ListaBecas;
 
 public interface IBecaService {

@@ -3,7 +3,7 @@ package ar.edu.unju.fi.tp5.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unju.fi.tp5.model.Alumno;
+import ar.edu.unju.fi.tp5.entity.Alumno;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
 import ar.edu.unju.fi.tp5.util.ListaAlumnos;
 
