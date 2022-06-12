@@ -1,6 +1,8 @@
 package ar.edu.unju.fi.tp5.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -75,11 +78,13 @@ public class Curso {
 	@JoinColumn(name="CUR_DOCENTE_ID")
 	private Docente docente;
 	
-	@OneToOne(mappedBy = "curso", fetch = FetchType.LAZY)
+	//@OneToOne(mappedBy = "curso", fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CUR_BECA_ID")
 	private Beca beca;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Alumno alumno;
+	@ManyToMany(mappedBy="cursos", fetch = FetchType.LAZY)
+	private List<Alumno> alumnos = new ArrayList<Alumno>();
 	
 	// FIN RELACIONES
 
