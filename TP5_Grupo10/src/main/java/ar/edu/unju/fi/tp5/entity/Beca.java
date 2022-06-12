@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,11 +56,11 @@ public class Beca {
 	private String estado;
 
 	// RELACIONES
-	@OneToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "BEC_CURSO_ID")
+	@OneToOne(mappedBy = "beca", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "BEC_CURSO_ID")
 	private Curso curso;
 
-	@OneToMany(mappedBy = "beca", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "beca", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Alumno> alumnos;
 
 	// FIN RELACIONES
