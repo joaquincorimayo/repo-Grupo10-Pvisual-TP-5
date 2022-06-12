@@ -1,5 +1,7 @@
 package ar.edu.unju.fi.tp5.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +53,14 @@ public class DocenteController {
 
 		// Pagina que voy a devolver
 		ModelAndView mav = new ModelAndView("lista_docentes");
+		docenteService.guardarDocente(docente);
 		// Realiza la carga de un nuevo objeto (docente 'cargado')
-		if (docenteService.guardarDocente(docente)) {
-			logger.info("Method: getListaDocentePage() - Information: Se agregó un objeto al arrayList de docente");
-		}
-
+//		if (docenteService.guardarDocente(docente)) {
+//			logger.info("Method: getListaDocentePage() - Information: Se agregó un objeto al arrayList de docente");
+//		}
+		List<Docente> docentes = docenteService.getListaDocente();
 		// Envia el ArrayList de docentes a la pagina lista_docentes
-		mav.addObject("docentes", docenteService.getListaDocente().getDocentes());
+		mav.addObject("docentes", docentes);
 		return mav;
 	}
 
@@ -66,7 +69,8 @@ public class DocenteController {
 		logger.info("Method: getListadoDocentePage() - Information: Se visualiza los docentes registrados");
 		// Permite visualizar docentes que contiene el arraylist
 		ModelAndView mav = new ModelAndView("lista_docentes");
-		mav.addObject("docentes", docenteService.getListaDocente().getDocentes());
+		List<Docente> docentes = docenteService.getListaDocente();
+		mav.addObject("docentes", docentes);
 		return mav;
 	}
 

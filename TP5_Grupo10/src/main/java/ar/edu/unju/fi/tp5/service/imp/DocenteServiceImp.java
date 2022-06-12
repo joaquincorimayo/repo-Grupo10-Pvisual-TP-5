@@ -1,19 +1,22 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Docente;
+import ar.edu.unju.fi.tp5.repository.IDocenteRepository;
 import ar.edu.unju.fi.tp5.service.IDocenteService;
-import ar.edu.unju.fi.tp5.util.ListaDocente;
+
 
 @Service("DocenteServiceImpList")
 public class DocenteServiceImp implements IDocenteService {
 
+//	@Autowired
+//	private ListaDocente listaDocentes;
 	@Autowired
-	private ListaDocente listaDocentes;
+	IDocenteRepository docenteRepository;
 	
 	@Override
 	public Docente getDocente() {
@@ -23,19 +26,23 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public boolean guardarDocente(Docente docente) {
-		// guarda un objeto alumno en la lista de docente
-		return this.listaDocentes.getDocentes().add(docente);
+		docente.setEstado(true);
+		if(docenteRepository.save(docente)!= null) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void modificarDocente(Docente docente) {
-		for (Docente doc: this.listaDocentes.getDocentes()) {
+		for (Docente doc:docenteRepository.findAll()) {
 			if (doc.getLegajo() == docente.getLegajo()) {
 				doc.setLegajo(docente.getLegajo());
 				doc.setNombre(docente.getNombre());
 				doc.setApellido(docente.getApellido());
 				doc.setEmail(docente.getEmail());
 				doc.setTelefono(docente.getTelefono());
+				docenteRepository.save(doc);
 			}
 		}
 
@@ -43,24 +50,22 @@ public class DocenteServiceImp implements IDocenteService {
 
 	@Override
 	public void eliminarDocente(int legajo) {
-		for (int i = 0; i < this.listaDocentes.getDocentes().size(); i++) {
-			if (this.listaDocentes.getDocentes().get(i).getLegajo() == legajo) {
-				this.listaDocentes.getDocentes().remove(i);
-			}
-		}
+		Docente docente = buscarDocente(legajo);
+		docente.setEstado(false);
+		docenteRepository.save(docente);
 	}
 
 	@Override
-	public ListaDocente getListaDocente() {
+	public List<Docente> getListaDocente() {
 		// retorna el objeto que accede a la lista de docentes
-		return this.listaDocentes;  
+		List<Docente> docentes = docenteRepository.findByEstado(true);
+		return docentes;  
 	}
 
 	@Override
 	public Docente buscarDocente(int legajo) {
-		// busca docente por legajo y devuelve el objeto asociado al legajo del docente
-		Optional<Docente> docente = this.listaDocentes.getDocentes().stream().filter(a -> a.getLegajo() == legajo).findFirst();
-		return docente.get();
+		return docenteRepository.findByLegajo(legajo);
 	}
 
 }
+
