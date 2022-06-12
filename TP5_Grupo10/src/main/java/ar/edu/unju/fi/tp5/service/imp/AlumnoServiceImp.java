@@ -1,68 +1,64 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ar.edu.unju.fi.tp5.entity.Alumno;
+import ar.edu.unju.fi.tp5.repository.IAlumnoRepository;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
-import ar.edu.unju.fi.tp5.util.ListaAlumnos;
 
 @Service("AlumnoServiceImpList")
 public class AlumnoServiceImp implements IAlumnoService {
+	
 
 	@Autowired
-	private ListaAlumnos listaAlumnos; // ID
-
+	private IAlumnoRepository alumnoRepository;
+	
 	@Override
 	public Alumno getAlumno() {
 		return new Alumno();
 	}
-
+	
 	@Override
 	public boolean guardarAlumno(Alumno alumno) {
-		return this.listaAlumnos.getAlumnos().add(alumno);
+		alumno.setEstado(true);
+		if(alumnoRepository.save(alumno) != null ) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public void modificarAlumno(Alumno alumno) {
-		for (Alumno alm : this.listaAlumnos.getAlumnos()) {
+		
+		for (Alumno alm:alumnoRepository.findAll()) {
 			if (alm.getDni().equals(alumno.getDni())) {
 				alm.setApellido(alumno.getApellido());
 				alm.setDni(alumno.getDni());
 				alm.setEmail(alumno.getEmail());
 				alm.setNombre(alumno.getNombre());
 				alm.setTelefono(alumno.getTelefono());
+				alumnoRepository.save(alm);
 			}
 		}
 	}
-
+	
 	@Override
 	public void eliminarAlumno(String dni) {
-		for (int i = 0; i < this.listaAlumnos.getAlumnos().size(); i++) {
-			if (this.listaAlumnos.getAlumnos().get(i).getDni().equals(dni)) {
-				this.listaAlumnos.getAlumnos().remove(i);
-				// i--;
-			}
-		}
+		Alumno alumno = buscarAlumno(dni);
+		alumno.setEstado(false);
+		alumnoRepository.save(alumno);
 	}
 
 	@Override
-	public ListaAlumnos getListaAlumnos() {
-		return this.listaAlumnos;
+	public List<Alumno> getListaAlumnos() {
+		List<Alumno> alumnos = alumnoRepository.findByEstado(true);
+		return alumnos;
 	}
 
 	@Override
 	public Alumno buscarAlumno(String dni) {
-		Alumno devolverAlumno = new Alumno();
-		for (Alumno alm : this.listaAlumnos.getAlumnos()) {
-			if (alm.getDni().equals(dni)) {
-				devolverAlumno.setApellido(alm.getApellido());
-				devolverAlumno.setDni(alm.getDni());
-				devolverAlumno.setEmail(alm.getEmail());
-				devolverAlumno.setNombre(alm.getNombre());
-				devolverAlumno.setTelefono(alm.getTelefono());
-			}
-		}
-		return devolverAlumno;
+		return alumnoRepository.findByDni(dni);
 	}
 }

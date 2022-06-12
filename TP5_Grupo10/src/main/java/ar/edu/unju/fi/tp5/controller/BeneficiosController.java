@@ -32,10 +32,10 @@ public class BeneficiosController {
 
 	@GetMapping("/beneficios")
 	public String getBeneficiosPage(Model model) {
-		model.addAttribute("alumnos", this.alumnoService.getListaAlumnos().getAlumnos());
+		model.addAttribute("alumnos", this.alumnoService.getListaAlumnos());
 		model.addAttribute("becas", this.becaService.getListaBecas().getBecas());
 		model.addAttribute("cursos", this.cursoService.getListaCursos().getCursos());
-		model.addAttribute("docentes", this.docenteService.getListaDocente().getDocentes());
+		model.addAttribute("docentes", this.docenteService.getListaDocente());
 		return "beneficios";
 	}
 }

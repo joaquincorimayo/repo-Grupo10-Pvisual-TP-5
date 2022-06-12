@@ -1,7 +1,7 @@
 package ar.edu.unju.fi.tp5.service;
 
+import java.util.List;
 import ar.edu.unju.fi.tp5.entity.Docente;
-import ar.edu.unju.fi.tp5.util.ListaDocente;
 
 public interface IDocenteService {
 
@@ -9,7 +9,7 @@ public interface IDocenteService {
 	public boolean guardarDocente(Docente docente);
 	public void modificarDocente(Docente docente);
 	public void eliminarDocente(int legajo);
-	public ListaDocente getListaDocente();
+	public List<Docente> getListaDocente();
 	public Docente buscarDocente(int legajo);
 	
 }

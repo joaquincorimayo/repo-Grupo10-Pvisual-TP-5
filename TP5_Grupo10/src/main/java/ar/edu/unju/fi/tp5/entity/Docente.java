@@ -50,6 +50,9 @@ public class Docente {
 	@Column(name = "DOC_TELEFONO")
 	private String telefono;
 	
+	@Column (name="DOC_ESTADO")
+	private boolean estado;
+	
 	// RELACIONES 
 	@OneToMany(mappedBy ="docente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	//@Column(name = "DOC_CURSO_ID")
@@ -59,6 +62,14 @@ public class Docente {
 	
 	public Docente() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	public Docente(int legajo, String nombre, String apellido, String email, String telefono) {

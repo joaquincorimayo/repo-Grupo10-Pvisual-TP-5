@@ -53,6 +53,9 @@ public class Alumno {
 	@NotEmpty(message = "El teléfono del alumno no puede ser vacío.")
 	@Column(name = "ALU_TELEFONO")
 	private String telefono;
+	
+	@Column(name="ALU_ESTADO")
+	private boolean estado;
 
 	// RELACIONES
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -124,6 +127,14 @@ public class Alumno {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	@Override
