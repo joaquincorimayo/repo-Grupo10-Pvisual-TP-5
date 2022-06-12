@@ -73,6 +73,9 @@ public class Curso {
 	@Column(name = "CUR_SEMANAS")
 	private int dos;
 	
+	@Column(name = "CUR_ESTADO")
+	private boolean estado;
+	
 	// RELACIONES 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CUR_DOCENTE_ID")
@@ -105,6 +108,16 @@ public class Curso {
 		this.docente = docente;
 //		Period period = Period.between(fechaInicio, fechaFin);
 		this.dos = 2;
+	}
+	
+	
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	public int getDos() {

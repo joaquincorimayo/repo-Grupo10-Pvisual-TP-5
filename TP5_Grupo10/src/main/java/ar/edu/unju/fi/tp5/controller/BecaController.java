@@ -1,5 +1,7 @@
 package ar.edu.unju.fi.tp5.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,8 @@ public class BecaController {
 		if (becaService.guardarBeca(beca)) {
 			logger.info("Method: getListaBecaPage() - Information: Se agregó un objeto al arrayList de beca");
 		}
-		mav.addObject("becas", becaService.getListaBecas().getBecas());
+		List<Beca> becas = becaService.getListaBecas();
+		mav.addObject("becas", becas);
 		return mav;
 	}
 
@@ -57,7 +60,8 @@ public class BecaController {
 	public ModelAndView getListadoBecaPage() {
 		logger.info("Method: getListadoBecaPage() - Information: Se visualiza las becas registradas");
 		ModelAndView mav = new ModelAndView("lista_becas");
-		mav.addObject("becas", becaService.getListaBecas().getBecas());
+		List<Beca> becas = becaService.getListaBecas();
+		mav.addObject("becas", becas);
 		return mav;
 	}
 	
