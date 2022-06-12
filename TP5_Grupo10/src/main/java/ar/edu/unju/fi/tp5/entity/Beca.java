@@ -53,7 +53,7 @@ public class Beca {
 
 	@NotEmpty(message = "El estado de la beca no puede ser vacío")
 	@Column(name = "BEC_ESTADO")
-	private String estado;
+	private boolean estado;
 
 	// RELACIONES
 	@OneToOne(mappedBy = "beca", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -69,7 +69,7 @@ public class Beca {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Beca(int codigo, Curso curso, LocalDate fechaFin, LocalDate fechaInicio, String estado) {
+	public Beca(int codigo, Curso curso, LocalDate fechaFin, LocalDate fechaInicio, boolean estado) {
 		super();
 		this.codigo = codigo;
 		this.curso = curso;
@@ -110,11 +110,13 @@ public class Beca {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public String getEstado() {
+
+
+	public boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
 

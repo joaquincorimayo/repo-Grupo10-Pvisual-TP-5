@@ -1,19 +1,23 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Curso;
+import ar.edu.unju.fi.tp5.repository.ICursoRepository;
 import ar.edu.unju.fi.tp5.service.ICursoService;
 import ar.edu.unju.fi.tp5.util.ListaCursos;
 
 @Service("CursoServiceImpList")
 public class CursoServiceImp implements ICursoService {
 
-	@Autowired
-	private ListaCursos listaCursos;
+//	@Autowired
+//	private ListaCursos listaCursos;
+	
+	ICursoRepository cursoRepository;
 
 	@Override
 	public Curso getCurso() {
@@ -22,12 +26,17 @@ public class CursoServiceImp implements ICursoService {
 
 	@Override
 	public boolean guardarCurso(Curso curso) {
-		return this.listaCursos.getCursos().add(curso);
+		curso.setEstado(true);
+		if(cursoRepository.save(curso)!=null) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override
 	public void modificarCurso(Curso curso) {
-		for (Curso cur : this.listaCursos.getCursos()) {
+		for (Curso cur : cursoRepository.findAll()) {
 			if (cur.getCodigo() == curso.getCodigo()) {
 				cur.setCantidadHoras(curso.getCantidadHoras());
 				cur.setCategoria(curso.getCategoria());
@@ -44,22 +53,20 @@ public class CursoServiceImp implements ICursoService {
 
 	@Override
 	public void eliminarCurso(int codigo) {
-		for (int i = 0; i < this.listaCursos.getCursos().size(); i++) {
-			if (this.listaCursos.getCursos().get(i).getCodigo() == codigo) {
-				this.listaCursos.getCursos().remove(i);
-			}
-		}
+		Curso curso = buscarCurso(codigo);
+		curso.setEstado(false);
+		cursoRepository.save(curso);
 	}
 
 	@Override
-	public ListaCursos getListaCursos() {
-		return this.listaCursos;
+	public List<Curso> getListaCursos() {
+		List<Curso> cursos = cursoRepository.findByEstado(true);
+		return cursos;
 	}
 
 	@Override
 	public Curso buscarCurso(int codigo) {
-		Optional<Curso> curso = this.listaCursos.getCursos().stream().filter(a -> a.getCodigo() == codigo).findFirst();
-		return curso.get();
+		return cursoRepository.findByCodigo(codigo);
 	}
 
 }

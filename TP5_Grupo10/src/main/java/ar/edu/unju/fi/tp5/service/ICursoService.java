@@ -1,7 +1,8 @@
 package ar.edu.unju.fi.tp5.service;
 
+import java.util.List;
+
 import ar.edu.unju.fi.tp5.entity.Curso;
-import ar.edu.unju.fi.tp5.util.ListaCursos;
 
 public interface ICursoService {
 	
@@ -9,7 +10,7 @@ public interface ICursoService {
 	public boolean guardarCurso(Curso curso);
 	public void modificarCurso(Curso curso);
 	public void eliminarCurso(int codigo);
-	public ListaCursos getListaCursos();
+	public List<Curso> getListaCursos();
 	public Curso buscarCurso(int codigo);
 
 }

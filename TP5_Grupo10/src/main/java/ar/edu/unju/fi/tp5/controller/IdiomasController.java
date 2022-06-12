@@ -19,7 +19,7 @@ public class IdiomasController {
 
 	@GetMapping("/idiomas")
 	public String getIdiomasPage(Model model) {
-		model.addAttribute("cursos",this.cursoService.getListaCursos().getCursos());
+		model.addAttribute("cursos",this.cursoService.getListaCursos());
 		return "idiomas";
 	}
 }

@@ -1,5 +1,7 @@
 package ar.edu.unju.fi.tp5.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,8 @@ public class CursoController {
 		if (cursoService.guardarCurso(curso)) {
 			logger.info("Method: getListaCursoPage() - Information: Se agregó un objeto al arrayList de curso");
 		}
-		mav.addObject("cursos", cursoService.getListaCursos().getCursos());
+		List<Curso> cursos = cursoService.getListaCursos();
+		mav.addObject("cursos", cursos);
 		return mav;
 	}
 
@@ -57,7 +60,8 @@ public class CursoController {
 	public ModelAndView getListaCursosPage() {
 		logger.info("Method: getListadoCursoPage() - Information: Se visualiza los cursos registrados");
 		ModelAndView mav = new ModelAndView("lista_cursos");
-		mav.addObject("cursos", cursoService.getListaCursos().getCursos());
+		List<Curso> cursos = cursoService.getListaCursos();
+		mav.addObject("cursos", cursos);
 		return mav;
 	}
 
