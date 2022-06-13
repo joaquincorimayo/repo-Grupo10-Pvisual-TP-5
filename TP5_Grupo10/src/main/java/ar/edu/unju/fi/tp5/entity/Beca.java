@@ -51,7 +51,7 @@ public class Beca {
 	@Column(name = "BEC_FECH_FIN")
 	private LocalDate fechaFin;
 
-	@NotEmpty(message = "El estado de la beca no puede ser vacío")
+	//@NotEmpty(message = "El estado de la beca no puede ser vacío")
 	@Column(name = "BEC_ESTADO")
 	private boolean estado;
 

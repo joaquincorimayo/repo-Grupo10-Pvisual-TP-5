@@ -16,7 +16,7 @@ public class CursoServiceImp implements ICursoService {
 
 //	@Autowired
 //	private ListaCursos listaCursos;
-	
+	@Autowired
 	ICursoRepository cursoRepository;
 
 	@Override

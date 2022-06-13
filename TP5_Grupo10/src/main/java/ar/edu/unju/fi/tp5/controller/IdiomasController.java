@@ -12,14 +12,13 @@ import ar.edu.unju.fi.tp5.service.ICursoService;
 public class IdiomasController {
 
 //	ListaCursos cursosDisponibles = new ListaCursos();
-	
 	@Autowired
 	@Qualifier("CursoServiceImpList")
 	private ICursoService cursoService;
-
+	
 	@GetMapping("/idiomas")
 	public String getIdiomasPage(Model model) {
-		model.addAttribute("cursos",this.cursoService.getListaCursos());
+		model.addAttribute("cursos",cursoService.getListaCursos());
 		return "idiomas";
 	}
 }
