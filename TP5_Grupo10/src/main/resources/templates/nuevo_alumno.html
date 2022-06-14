@@ -39,9 +39,9 @@
 		<div class="row mb-3">
 			<label for="inputDni" class="col-sm-2 col-form-label">DNI</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputDni"
-					th:field="*{dni}">
+				<input type="text" class="form-control" id="inputDni" th:field="*{dni}">
 				<div class="text-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
+				<div class="text-danger" th:if="${status==false}">El DNI ingresado ya existe.</div>
 			</div>
 		</div>
 

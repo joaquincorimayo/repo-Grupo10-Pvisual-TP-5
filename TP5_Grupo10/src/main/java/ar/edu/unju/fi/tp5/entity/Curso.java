@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -76,17 +77,19 @@ public class Curso {
 	@Column(name = "CUR_ESTADO")
 	private boolean estado;
 	
-	// RELACIONES 
+	// RELACION DOCENTE-CURSO Uni-direccional
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CUR_DOCENTE_ID")
 	private Docente docente;
 	
-	//@OneToOne(mappedBy = "curso", fetch = FetchType.LAZY)
+	// RELACION BECA-CURSO Uni-direccional
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CUR_BECA_ID")
 	private Beca beca;
 	
-	@ManyToMany(mappedBy="cursos", fetch = FetchType.LAZY)
+	// RELACION ALUMNO-CURSO Uni-direccional (JOIN TABLE)
+	//@ManyToMany(mappedBy="cursos", fetch = FetchType.LAZY)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Alumno> alumnos = new ArrayList<Alumno>();
 	
 	// FIN RELACIONES

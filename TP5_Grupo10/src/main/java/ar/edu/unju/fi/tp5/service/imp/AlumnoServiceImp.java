@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,20 +11,30 @@ import ar.edu.unju.fi.tp5.service.IAlumnoService;
 
 @Service("AlumnoServiceImpList")
 public class AlumnoServiceImp implements IAlumnoService {
-	
 
 	@Autowired
 	private IAlumnoRepository alumnoRepository;
-	
+
 	@Override
 	public Alumno getAlumno() {
 		return new Alumno();
 	}
-	
+
+	public boolean existUser(String dni) {
+		boolean bandera = false;
+		for (Alumno a : alumnoRepository.findAll()) {
+			if (a.getDni().equals(dni)) {
+				bandera=true;
+			}
+		}
+		return bandera;
+	}
+
 	@Override
 	public boolean guardarAlumno(Alumno alumno) {
 		alumno.setEstado(true);
-		if(alumnoRepository.save(alumno) != null ) {
+		if(!existUser(alumno.getDni())) {
+			alumnoRepository.save(alumno);
 			return true;
 		}
 		return false;
@@ -31,24 +42,14 @@ public class AlumnoServiceImp implements IAlumnoService {
 
 	@Override
 	public void modificarAlumno(Alumno alumno) {
-		
-		for (Alumno alm:alumnoRepository.findAll()) {
-			if (alm.getDni().equals(alumno.getDni())) {
-				alm.setApellido(alumno.getApellido());
-				alm.setDni(alumno.getDni());
-				alm.setEmail(alumno.getEmail());
-				alm.setNombre(alumno.getNombre());
-				alm.setTelefono(alumno.getTelefono());
-				alumnoRepository.save(alm);
-			}
-		}
-	}
-	
-	@Override
-	public void eliminarAlumno(String dni) {
-		Alumno alumno = buscarAlumno(dni);
-		alumno.setEstado(false);
 		alumnoRepository.save(alumno);
+	}
+
+	@Override
+	public void eliminarAlumno(Long id) {
+		Optional<Alumno> alumno = buscarAlumno(id);
+		alumno.get().setEstado(false);
+		alumnoRepository.save(alumno.get());
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class AlumnoServiceImp implements IAlumnoService {
 	}
 
 	@Override
-	public Alumno buscarAlumno(String dni) {
-		return alumnoRepository.findByDni(dni);
+	public Optional<Alumno> buscarAlumno(Long id) {
+		return alumnoRepository.findById(id);
 	}
 }

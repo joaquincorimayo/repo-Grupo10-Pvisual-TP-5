@@ -13,116 +13,146 @@
 <link type="text/css" href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-	<!-- PAGINA EN CONSTRUCCION, SE UTILIZA BOOTSTRAP PERO NO SE VISUALIZAN DATOS (todavia) -->
-
-
 	<!-- Uso del fragmento header-->
 	<header th:replace="layouts/header::fheader"></header>
 	<br />
 	<!-- Declaracion de imagen, utilizando bootstrap -->
-	<img src="images/becas.jpg" class="img-fluid rounded mx-auto d-block border border-dark"
+	<img src="images/becas.jpg"
+		class="img-fluid rounded mx-auto d-block border border-dark"
 		alt="Becas convocatoria" title="Becas convocatoria">
 	<br />
+	
+	<div th:if="${banderaA}">
+<!-- 		Tabla para Alumno (int dni, String nombre, String apellido, String -->
+<!-- 		email, int telefono)  -->
+		<h2>Tabla de Alumnos</h2>
+		<table class="table container border border-info">
+			<thead>
+				<tr>
+					<th scope="col">Dni</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Email</th>
+					<th scope="col">Telefono</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="al: ${alumnos}">
+					<td th:text="${al.dni}"></td>
+					<td th:text="${al.nombre}"></td>
+					<td th:text="${al.email}"></td>
+					<td th:text="${al.telefono}"></td>
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
 
 	<!-- TODA LA INFO DEL SITIO: Informacion de las clases -->
+<!-- 	<div th:switch="${contenido}"> -->
+<!-- 		<div th:case="'s'"> -->
+<!-- 			<!-- Tabla para Becas (int codigo, Curso curso, LocalDate fechaFin, LocalDate fechaInicio, String estado) --> -->
+<!-- 			<h2>Tabla de Becas</h2> -->
+<!-- 			<table class="table table-striped container border border-info"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th scope="col">Codigo</th> -->
+<!-- 						<th scope="col">Curso</th> -->
+<!-- 						<th scope="col">Estado</th> -->
+<!-- 						<th scope="col">Fecha Inicio</th> -->
+<!-- 						<th scope="col">Fecha Fin</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<!-- 					<tr th:each="idbecas: ${becas}"> -->
+<!-- 						<td th:text="${idbecas.codigo}"></td> -->
+<!-- 						<td th:text="$(idbecas.curso.titulo}"> -->
+<!-- 						<td th:text="${idbecas.estado}"></td> -->
+<!-- 						<td th:text="${idbecas.fechaInicio}"></td> -->
+<!-- 						<td th:text="${idbecas.fechaFin}"></td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
 
-	<!-- Tabla para Becas (int codigo, Curso curso, LocalDate fechaFin, LocalDate fechaInicio, String estado)-->
-	<h2>Tabla de Becas</h2>
-	<table class="table table-striped container border border-info">
-		<thead>
-			<tr>
-				<th scope="col">Codigo</th>
-				<th scope="col">Curso</th>
-				<th scope="col">Estado</th>
-				<th scope="col">Fecha Inicio</th>
-				<th scope="col">Fecha Fin</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="idbecas: ${becas}">
-				<td th:text="${idbecas.codigo}"></td>
-<!-- 				<td th:text="${idbecas.curso.titulo}"></td> -->
-				<td th:text="${idbecas.estado}"></td>
-				<td th:text="${idbecas.fechaInicio}"></td>
-				<td th:text="${idbecas.fechaFin}"></td>
-			</tr>
-		</tbody>
-	</table>
-	
-	<br />
-	<!-- Tabla para Cursos (int codigo, String titulo, String categoria, LocalDate fechaFin, LocalDate fechaInicio,
-			int cantidadHoras, String modalidad, Docente docente)-->
-	<h2>Tabla de Cursos</h2>
-	<table class="table table-dark table-striped container border border-info">
-		<thead>
-			<tr>
-				<th scope="col">Codigo</th>
-				<th scope="col">Titulo</th>
-				<th scope="col">Categoria</th>
-				<th scope="col">Modalidad</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="idcursos: ${cursos}">
-				<td th:text="${idcursos.codigo}"></td>
-				<td th:text="${idcursos.titulo}"></td>
-				<td th:text="${idcursos.categoria}"></td>
-				<td th:text="${idcursos.modalidad}"></td>
-			</tr>
-		</tbody>
+<!-- 			<br /> -->
+<!-- 			<!-- Tabla para Cursos (int codigo, String titulo, String categoria, LocalDate fechaFin, LocalDate fechaInicio, -->
+<!-- 			int cantidadHoras, String modalidad, Docente docente) --> -->
+<!-- 			<h2>Tabla de Cursos</h2> -->
+<!-- 			<table -->
+<!-- 				class="table table-dark table-striped container border border-info"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th scope="col">Codigo</th> -->
+<!-- 						<th scope="col">Titulo</th> -->
+<!-- 						<th scope="col">Categoria</th> -->
+<!-- 						<th scope="col">Modalidad</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<!-- 					<tr th:each="idcursos: ${cursos}"> -->
+<!-- 						<td th:text="${idcursos.codigo}"></td> -->
+<!-- 						<td th:text="${idcursos.titulo}"></td> -->
+<!-- 						<td th:text="${idcursos.categoria}"></td> -->
+<!-- 						<td th:text="${idcursos.modalidad}"></td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
 
-		</tbody>
-	</table>
-	
-	<br />
-	<!-- Tabla para Docente(int legajo, String nombre, String apellido, String email, int telefono) -->
-	<h2>Tabla de Docentes</h2>
-	<table class="table table-success table-striped container border border-info">
-		<thead>
-			<tr>
-				<th scope="col">Legajo</th>
-				<th scope="col">Nombre</th>
-				<th scope="col">Apellido</th>
-				<th scope="col">Email</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="iddocentes: ${docentes}">
-				<td th:text="${iddocentes.legajo}"></td>
-				<td th:text="${iddocentes.nombre}"></td>
-				<td th:text="${iddocentes.apellido}"></td>
-				<td th:text="${iddocentes.email}"></td>
-			</tr>
-		</tbody>
-	</table>
-	
-	<br />
-	<!-- Tabla para Alumno (int dni, String nombre, String apellido, String email, int telefono) -->
-	<h2>Tabla de Alumnos</h2>
-	<table class="table container border border-info">
-		<thead>
-			<tr>
-				<th scope="col">Dni</th>
-				<th scope="col">Nombre</th>
-				<th scope="col">Email</th>
-				<th scope="col">Telefono</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="al: ${alumnos}">
-				<td th:text="${al.dni}"></td>
-				<td th:text="${al.nombre}"></td>
-				<td th:text="${al.email}"></td>
-				<td th:text="${al.telefono}"></td>
-			</tr>
+<!-- 				</tbody> -->
+<!-- 			</table> -->
 
-		</tbody>
-	</table>
+<!-- 			<br /> -->
+<!-- 			<!-- Tabla para Docente(int legajo, String nombre, String apellido, String email, int telefono) --> -->
+<!-- 			<h2>Tabla de Docentes</h2> -->
+<!-- 			<table -->
+<!-- 				class="table table-success table-striped container border border-info"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th scope="col">Legajo</th> -->
+<!-- 						<th scope="col">Nombre</th> -->
+<!-- 						<th scope="col">Apellido</th> -->
+<!-- 						<th scope="col">Email</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<!-- 					<tr th:each="iddocentes: ${docentes}"> -->
+<!-- 						<td th:text="${iddocentes.legajo}"></td> -->
+<!-- 						<td th:text="${iddocentes.nombre}"></td> -->
+<!-- 						<td th:text="${iddocentes.apellido}"></td> -->
+<!-- 						<td th:text="${iddocentes.email}"></td> -->
+<!-- 					</tr> -->
+<!-- 				</tbody> -->
+<!-- 			</table> -->
 
-	<br />
-	<p class="container text-center" >
-		Informacion de Becas - Cursos - Docentes - Alumnos 
-	</p>
+<!-- 			<br /> -->
+<!-- 			<!-- Tabla para Alumno (int dni, String nombre, String apellido, String email, int telefono) --> -->
+<!-- 			<h2>Tabla de Alumnos</h2> -->
+<!-- 			<table class="table container border border-info"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th scope="col">Dni</th> -->
+<!-- 						<th scope="col">Nombre</th> -->
+<!-- 						<th scope="col">Email</th> -->
+<!-- 						<th scope="col">Telefono</th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<!-- 					<tr th:each="al: ${alumnos}"> -->
+<!-- 						<td th:text="${al.dni}"></td> -->
+<!-- 						<td th:text="${al.nombre}"></td> -->
+<!-- 						<td th:text="${al.email}"></td> -->
+<!-- 						<td th:text="${al.telefono}"></td> -->
+<!-- 					</tr> -->
+
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+<!-- 		</div> -->
+<!-- 		<div th:if="${banderaAlumno}"> -->
+<!-- 			<p class="container text-center">No hay Informacion de Becas - -->
+<!-- 				Cursos - Docentes - Alumnos</p> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+
+
 
 	<!-- Uso del fragmento footer-->
 	<footer th:replace="layouts/footer::ffooter"></footer>

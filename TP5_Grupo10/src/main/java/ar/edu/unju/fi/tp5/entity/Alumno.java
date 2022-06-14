@@ -10,10 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -57,15 +55,10 @@ public class Alumno {
 	@Column(name="ALU_ESTADO")
 	private boolean estado;
 
-	// RELACIONES
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ALU_BECA_ID")
-	private Beca beca;
-	
+	// RELACIONES	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "ALUMNOCURSO")
 	private List<Curso> cursos = new ArrayList<Curso>();
-
 	// FIN RELACIONES
 
 	public Alumno() {
@@ -136,10 +129,5 @@ public class Alumno {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-
-	@Override
-	public String toString() {
-		return "Alumno [dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
-				+ ", telefono=" + telefono + "]";
-	}
+	
 }

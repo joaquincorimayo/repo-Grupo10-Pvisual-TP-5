@@ -1,16 +1,11 @@
 package ar.edu.unju.fi.tp5.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -53,16 +48,10 @@ public class Docente {
 	@Column (name="DOC_ESTADO")
 	private boolean estado;
 	
-	// RELACIONES 
-	@OneToMany(mappedBy ="docente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	//@Column(name = "DOC_CURSO_ID")
-	private List<Curso> cursos = new ArrayList<Curso>();
-	// FIN RELACIONES
-	
-	
 	public Docente() {
-		// TODO Auto-generated constructor stub
+	
 	}
+	
 
 	public boolean isEstado() {
 		return estado;

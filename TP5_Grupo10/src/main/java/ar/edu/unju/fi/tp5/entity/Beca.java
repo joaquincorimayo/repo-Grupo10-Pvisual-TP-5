@@ -1,7 +1,6 @@
 package ar.edu.unju.fi.tp5.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,15 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,22 +47,16 @@ public class Beca {
 	@Column(name = "BEC_FECH_FIN")
 	private LocalDate fechaFin;
 
-	//@NotEmpty(message = "El estado de la beca no puede ser vacío")
 	@Column(name = "BEC_ESTADO")
 	private boolean estado;
 
-	// RELACIONES
+	// RELACION BECA-CURSO Uni-direccional
 	@OneToOne(mappedBy = "beca", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	//@JoinColumn(name = "BEC_CURSO_ID")
 	private Curso curso;
-
-	@OneToMany(mappedBy = "beca", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Alumno> alumnos;
-
 	// FIN RELACIONES
 
 	public Beca() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Beca(int codigo, Curso curso, LocalDate fechaFin, LocalDate fechaInicio, boolean estado) {
