@@ -122,6 +122,9 @@ public class Alumno {
 		this.id = id;
 	}
 
+	
+	
+
 	public boolean isEstado() {
 		return estado;
 	}
@@ -129,5 +132,13 @@ public class Alumno {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+
+	@Override
+	public String toString() {
+		return "Alumno [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", email="
+				+ email + ", telefono=" + telefono + ", estado=" + estado + ", cursos=" + cursos + "]";
+	}
+	
+	
 	
 }

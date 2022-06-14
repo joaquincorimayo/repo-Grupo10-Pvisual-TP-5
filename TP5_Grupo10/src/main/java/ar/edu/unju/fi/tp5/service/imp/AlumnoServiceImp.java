@@ -24,7 +24,11 @@ public class AlumnoServiceImp implements IAlumnoService {
 		boolean bandera = false;
 		for (Alumno a : alumnoRepository.findAll()) {
 			if (a.getDni().equals(dni)) {
-				bandera=true;
+				if (a.isEstado() == true) {
+					bandera=true;
+				} else {
+					bandera=false;		
+				}
 			}
 		}
 		return bandera;
@@ -32,8 +36,9 @@ public class AlumnoServiceImp implements IAlumnoService {
 
 	@Override
 	public boolean guardarAlumno(Alumno alumno) {
-		alumno.setEstado(true);
+		
 		if(!existUser(alumno.getDni())) {
+			alumno.setEstado(true);
 			alumnoRepository.save(alumno);
 			return true;
 		}
@@ -42,12 +47,12 @@ public class AlumnoServiceImp implements IAlumnoService {
 
 	@Override
 	public void modificarAlumno(Alumno alumno) {
-		alumnoRepository.save(alumno);
+		alumnoRepository.save(alumno);		
 	}
 
 	@Override
 	public void eliminarAlumno(Long id) {
-		Optional<Alumno> alumno = buscarAlumno(id);
+		Optional<Alumno> alumno = alumnoRepository.findById(id);
 		alumno.get().setEstado(false);
 		alumnoRepository.save(alumno.get());
 	}

@@ -29,13 +29,31 @@
 					th:value="*{dni}" disabled="disabled">
 			</div>
 		</div>
+		
 		<div class="row mb-3">
-			<input type="hidden" th:field="*{id}"> 
+			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
+			<input type="hidden" th:field="*{id}"> <label for="inputid"
+				class="col-sm-2 col-form-label">ID</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputid"
 					th:value="*{id}" disabled="disabled">
 			</div>
 		</div>
+		
+		<div class="row mb-3">
+			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
+			<input type="hidden" th:field="*{estado}"> <label for="inputestado"
+				class="col-sm-2 col-form-label">ESTADO</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputestado"
+					th:value="*{estado}" disabled="disabled">
+			</div>
+		</div>
+		
+		
+		
+		
+		
 		
 		<!-- Propiedades que se podran modificar,incluye validacion. -->
 		

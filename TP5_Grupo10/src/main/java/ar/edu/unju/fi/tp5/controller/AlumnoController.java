@@ -62,7 +62,6 @@ public class AlumnoController {
 			mav.addObject("status", status);
 		}
 		
-		
 		return mav;
 	}
 
@@ -95,9 +94,8 @@ public class AlumnoController {
 			mav.addObject("alumno", alumno);
 			return mav;
 		}
-
-		ModelAndView mav = new ModelAndView("redirect:/alumno/listaAlumnos");
 		alumnoService.modificarAlumno(alumno);
+		ModelAndView mav = new ModelAndView("redirect:/alumno/listaAlumnos");
 		return mav;
 	}
 
