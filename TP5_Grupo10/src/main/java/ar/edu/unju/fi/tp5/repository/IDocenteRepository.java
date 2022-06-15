@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.tp5.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,5 +11,5 @@ public interface IDocenteRepository extends JpaRepository<Docente, Long> {
 
 	public List<Docente> findByEstado(boolean estado);
 	
-	public Docente findByLegajo(int legajo);
+	public Optional<Docente> findById(Long id);
 }
