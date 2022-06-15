@@ -85,19 +85,19 @@
 				<div class="text-danger" th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></div>
 			</div>
 		</div>
-		
-		<div class="row mb-3">
-			<label for="inputDocente" class="col-sm-2 col-form-label">Docente</label>
-			<div class="col-6">
-					  <select class="form-select" id="inputModalidad" th:field="*{docente.apellido}" >
-					    <option value="Sanchez" >Alejandro Sanchez</option>
-					    <option value="Lamas">María Lamas</option>
-					    <option value="Perez">Martina Perez</option>
-					    <option value="Miranda">Pedro Miranda</option>
-					  </select>
-					  <div class="text-danger" th:if="${#fields.hasErrors('docente.apellido')}" th:errors="*{docente.apellido}"></div>
-			</div>
-		</div>
+<!-- 		Implementar en servicio de cursos que devuelva la lista de decentes. -->
+<!-- 		<div class="row mb-3"> -->
+<!-- 			<label for="inputDocente" class="col-sm-2 col-form-label">Docente</label> -->
+<!-- 			<div class="col-6"> -->
+<!-- 					  <select class="form-select" id="inputModalidad" th:field="*{docente.apellido}" > -->
+<!-- 					    <option value="Sanchez" >Alejandro Sanchez</option> -->
+<!-- 					    <option value="Lamas">María Lamas</option> -->
+<!-- 					    <option value="Perez">Martina Perez</option> -->
+<!-- 					    <option value="Miranda">Pedro Miranda</option> -->
+<!-- 					  </select> -->
+<!-- 					  <div class="text-danger" th:if="${#fields.hasErrors('docente.apellido')}" th:errors="*{docente.apellido}"></div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			<button class="btn btn-primary me-md-2" type="submit">Enviar</button>

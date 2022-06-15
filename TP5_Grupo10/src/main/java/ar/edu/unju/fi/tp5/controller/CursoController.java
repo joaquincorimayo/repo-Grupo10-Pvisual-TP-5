@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.tp5.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,24 +42,32 @@ public class CursoController {
 	@PostMapping("/guardar")
 	public ModelAndView getListaCursoPage(@Validated @ModelAttribute("curso") Curso curso,
 			BindingResult bindingResult) {
+		ModelAndView mav;
 		if (bindingResult.hasErrors()) {
-			ModelAndView mav = new ModelAndView("nuevo_curso");
+			logger.info("Method: saveNewCursoPage() - Information: Error en ingreso de datos para Curso.");
+			mav = new ModelAndView("nuevo_curso");
 			mav.addObject("curso", curso);
 			return mav;
 		}
-
-		ModelAndView mav = new ModelAndView("lista_cursos");
-		if (cursoService.guardarCurso(curso)) {
-			logger.info("Method: getListaCursoPage() - Information: Se agregó un objeto al arrayList de curso");
+		
+		boolean status = cursoService.guardarCurso(curso);
+		
+		if(status) {
+			logger.info("Method: saveNewCursoPage() - Information: Se agregó un objeto al arrayList de curso");
+			mav = new ModelAndView("redirect:/curso/listaCursos");
+		}else {
+			logger.info("Method: saveNewCursoPage() - Information: No Se agrego al nuevo curso.");
+			mav=new ModelAndView("nuevo_curso");
+			mav.addObject("curso", curso);
+			mav.addObject("status", status);
 		}
-		List<Curso> cursos = cursoService.getListaCursos();
-		mav.addObject("cursos", cursos);
+		 
 		return mav;
 	}
 
 	@GetMapping("/listaCursos")
 	public ModelAndView getListaCursosPage() {
-		logger.info("Method: getListadoCursoPage() - Information: Se visualiza los cursos registrados");
+		logger.info("Method: getListadoCursoPage() - Information: Se recuperan los regitros de la BD para Cursos");
 		ModelAndView mav = new ModelAndView("lista_cursos");
 		List<Curso> cursos = cursoService.getListaCursos();
 		mav.addObject("cursos", cursos);
@@ -67,12 +76,12 @@ public class CursoController {
 
 	// Peticiones de editar y eliminar
 
-	@GetMapping("/editar/{codigo}")
-	public ModelAndView getEditarCursoPage(@PathVariable(value = "codigo") int codigo) {
-		logger.info("Method: getEditarCursoPage() - Information: ");
+	@GetMapping("/editar/{id}")
+	public ModelAndView getEditarCursoPage(@PathVariable(value = "id") Long id) {
+		logger.info("Method: getEditarCursoPage() - Information: Se edita al Alumno con id "+id );
 		ModelAndView mav = new ModelAndView("edicion_curso");
-		Curso curso = cursoService.buscarCurso(codigo);
-		mav.addObject("curso", curso);
+		Optional<Curso> curso = cursoService.buscarCurso(id);
+		mav.addObject("curso", curso.get());
 		return mav;
 	}
 
@@ -80,22 +89,22 @@ public class CursoController {
 	public ModelAndView editarDatosCurso(@Validated @ModelAttribute("curso") Curso curso, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
-			logger.info("Method: editarDatosCurso() - Information: Error");
+			logger.info("Method: editarDatosCurso() - Information: Error en ingreso de datos");
 			ModelAndView mav = new ModelAndView("edicion_curso");
 			mav.addObject("curso", curso);
 			return mav;
 		}
-
-		ModelAndView mav = new ModelAndView("redirect:/curso/listaCursos");
 		cursoService.modificarCurso(curso);
+		ModelAndView mav = new ModelAndView("redirect:/curso/listaCursos");
+		
 		return mav;
 	}
 
-	@GetMapping("/eliminar/{codigo}")
-	public ModelAndView eliminarDatosCurso(@PathVariable(value = "codigo") int codigo) {
-		logger.info("Method: eliminarDatosCurso() - Information: ");
+	@GetMapping("/eliminar/{id}")
+	public ModelAndView eliminarDatosCurso(@PathVariable(value = "id") Long id) {
+		logger.info("Method: eliminarDatosCurso() - Information: se elimina logicamente al Curso con id "+id);
 		ModelAndView mav = new ModelAndView("redirect:/curso/listaCursos");
-		cursoService.eliminarCurso(codigo);
+		cursoService.eliminarCurso(id);
 		return mav;
 	}
 

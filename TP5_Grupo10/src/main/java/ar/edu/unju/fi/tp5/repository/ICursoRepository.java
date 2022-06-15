@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.tp5.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -8,8 +9,8 @@ import ar.edu.unju.fi.tp5.entity.Curso;
 
 public interface ICursoRepository extends JpaRepository<Curso, Long> {
 	
-	public List<Curso> findByEstado(boolean estado);
+	public Optional<Curso> findById(int codigo );
 	
-	public Curso findByCodigo(int codigo);
+	public List<Curso> findByEstado(boolean estado);
 
 }
