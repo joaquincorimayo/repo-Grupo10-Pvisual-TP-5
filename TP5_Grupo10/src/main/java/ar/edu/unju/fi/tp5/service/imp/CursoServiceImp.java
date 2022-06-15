@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ar.edu.unju.fi.tp5.entity.Curso;
 import ar.edu.unju.fi.tp5.repository.ICursoRepository;
 import ar.edu.unju.fi.tp5.service.ICursoService;
-import ar.edu.unju.fi.tp5.util.ListaCursos;
 
 @Service("CursoServiceImpList")
 public class CursoServiceImp implements ICursoService {
@@ -26,8 +25,10 @@ public class CursoServiceImp implements ICursoService {
 
 	@Override
 	public boolean guardarCurso(Curso curso) {
-		curso.setEstado(true);
-		if(cursoRepository.save(curso)!=null) {
+		
+		if(!existUser(curso.getCodigo())) {
+			curso.setEstado(true);
+			cursoRepository.save(curso);
 			return true;
 		}
 		
@@ -36,27 +37,9 @@ public class CursoServiceImp implements ICursoService {
 
 	@Override
 	public void modificarCurso(Curso curso) {
-		for (Curso cur : cursoRepository.findAll()) {
-			if (cur.getCodigo() == curso.getCodigo()) {
-				cur.setCantidadHoras(curso.getCantidadHoras());
-				cur.setCategoria(curso.getCategoria());
-				cur.setCodigo(curso.getCodigo());
-				cur.setDocente(curso.getDocente());
-				cur.setDos(curso.getDos());
-				cur.setFechaFin(curso.getFechaFin());
-				cur.setFechaInicio(curso.getFechaInicio());
-				cur.setModalidad(curso.getModalidad());
-				cur.setTitulo(curso.getTitulo());
-			}
-		}
-	}
-
-	@Override
-	public void eliminarCurso(int codigo) {
-		Curso curso = buscarCurso(codigo);
-		curso.setEstado(false);
 		cursoRepository.save(curso);
 	}
+
 
 	@Override
 	public List<Curso> getListaCursos() {
@@ -64,9 +47,35 @@ public class CursoServiceImp implements ICursoService {
 		return cursos;
 	}
 
+
+
 	@Override
-	public Curso buscarCurso(int codigo) {
-		return cursoRepository.findByCodigo(codigo);
+	public boolean existUser(int codigo) {
+		boolean band = false;
+		for(Curso c : cursoRepository.findAll()) {
+			if(c.getCodigo() == codigo) {
+				if(c.isEstado() == true) {
+					band=true;
+				}else {
+					band=false;
+				}
+			}
+		}
+		return band;
+	}
+
+	@Override
+	public Optional<Curso> buscarCurso(Long id) {
+		
+		return cursoRepository.findById(id);
+	}
+
+	@Override
+	public void eliminarCurso(Long id) {
+		Optional<Curso> curso = cursoRepository.findById(id);
+		curso.get().setEstado(false);
+		cursoRepository.save(curso.get());
+		
 	}
 
 }
