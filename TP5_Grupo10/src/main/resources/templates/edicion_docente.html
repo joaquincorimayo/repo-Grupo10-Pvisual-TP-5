@@ -12,12 +12,14 @@
 </head>
 
 <body class="container">
+	<!-- Texto informativo -->
 	<h1 class="text-center">Edicion de datos - Docente</h1>
 
+	<!-- Formulario de edicion -->
 	<form class="card p-3 bg-light" th:action="@{/docente/modificar}"
 		method="POST" th:object="${docente}">
 
-		<!-- 		Propiedad que no debe ser modificada, solamente se visualiza.-->
+		<!-- Propiedad que no debe ser modificada, solamente se visualiza.-->
 		<div class="row mb-3">
 			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
 			<input type="hidden" th:field="*{legajo}"> <label
@@ -27,9 +29,10 @@
 					th:value="*{legajo}" disabled="disabled">
 			</div>
 		</div>
-
-		<!-- 		Propiedades que se podran modificar, incluyendo tambien validacion -->
-
+		<input type="hidden" th:field="*{estado}"/>
+		<input type="hidden" th:field="*{id}"/>
+		
+		<!-- Propiedades que se podran modificar, incluyendo tambien validacion -->
 
 		<div class="row mb-3">
 			<label for="inputNombres" class="col-sm-2 col-form-label">Nombres</label>
@@ -40,6 +43,7 @@
 					th:errors="*{nombre}"></div>
 			</div>
 		</div>
+		
 		<div class="row mb-3">
 			<label for="inputApellidos" class="col-sm-2 col-form-label">Apellidos</label>
 			<div class="col-sm-10">
@@ -69,15 +73,15 @@
 					th:errors="*{telefono}"></div>
 			</div>
 		</div>
-		<!-- 		Fin propiedades que pueden ser modificadas.-->
+		
+		<!-- Fin propiedades que pueden ser modificadas.-->
 
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			<button class="btn btn-primary me-md-2" type="submit">Confirmar</button>
-			<a th:href="@{/inicio}" id="cancel" class="btn btn-secondary">Cancelar</a>
+			<a th:href="@{/docente/listaDocentes}" id="cancel" class="btn btn-secondary">Cancelar</a>
 		</div>
 
 	</form>
-
 
 	<!-- Uso del fragmento header-->
 	<footer th:replace="layouts/footer::ffooter"></footer>

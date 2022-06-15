@@ -41,9 +41,9 @@
 					<td th:text="${docente.apellido}"></td>
 					<td th:text="${docente.email}"></td>
 					<td th:text="${docente.telefono}"></td>
-					<td><a th:href="@{/docente/editar/}+${docente.legajo}"
+					<td><a th:href="@{/docente/editar/}+${docente.id}"
 						id="editarDocente" class="btn btn-warning">Editar</a> <a
-						th:href="@{/docente/eliminar/}+${docente.legajo}"
+						th:href="@{/docente/eliminar/}+${docente.id}"
 						id="eliminarDocente" class="btn btn-danger">Eliminar</a></td>
 				</tr>
 			</table>

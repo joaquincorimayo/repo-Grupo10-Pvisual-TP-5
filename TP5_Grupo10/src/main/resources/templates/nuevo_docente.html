@@ -25,6 +25,7 @@
 				<input type="text" class="form-control" id="inputLegajo"
 					th:field="*{legajo}">
 				<div class="text-danger" th:if="${#fields.hasErrors('legajo')}" th:errors="*{legajo}"></div>	
+				<div class="text-danger" th:if="${status==false}">El legajo ingresado ya existe.</div>
 			</div>
 		</div>
 
