@@ -1,11 +1,15 @@
 package ar.edu.unju.fi.tp5.entity;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -47,6 +51,9 @@ public class Docente {
 	
 	@Column (name="DOC_ESTADO")
 	private boolean estado;
+	
+	@OneToMany(mappedBy = "docente")
+    private List<Curso> cursos = new ArrayList<Curso>();
 	
 	public Docente() {
 	

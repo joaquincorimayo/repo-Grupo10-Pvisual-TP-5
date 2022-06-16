@@ -45,12 +45,6 @@ public class AlumnoServiceImp implements IAlumnoService {
 		
 		if(!existUser(alumno.getDni())) {
 			alumno.setEstado(true);
-			//RECIBO ESTO: Alumno [id=null, dni=40154287, nombre=joaquin, apellido=corimayo, 
-			// email=joaquin97corimayo@gmail.com, telefono=1244124, estado=true, 
-			// cursos=[ar.edu.unju.fi.tp5.entity.Curso@2b14669a]]
-
-			//cursoService.devolverCurso(null)
-//			System.out.println("RECIBO ESTO: "+ alumno.getCursos().add(null));
 			alumnoRepository.save(alumno);
 			return true;
 		}

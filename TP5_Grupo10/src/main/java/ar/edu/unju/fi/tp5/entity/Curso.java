@@ -77,9 +77,8 @@ public class Curso {
 	private boolean estado;
 
 	// RELACION DOCENTE-CURSO Uni-direccional
-	@NotNull(message = "Debe tener asignado un docente")
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "DOC_ID")
+	@ManyToOne
+    @JoinColumn(name="DOC_ID", nullable=false)
 	private Docente docente;
 
 	// RELACION BECA-CURSO Uni-direccional
@@ -91,8 +90,8 @@ public class Curso {
 	
 	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
 	//@JoinColumn(name="ALU_ID")
-	@ManyToMany(mappedBy = "cursos",fetch = FetchType.EAGER)
-	private List<Alumno> alumnos;
+	@ManyToMany
+	private List<Alumno> alumnos = new ArrayList<Alumno>();
 	// FIN RELACIONES
 
 	public Curso() {

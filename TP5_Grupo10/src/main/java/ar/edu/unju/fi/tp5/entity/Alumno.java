@@ -56,10 +56,11 @@ public class Alumno {
 	private boolean estado;
 
 	// RELACIONES
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany
 	//@OneToMany(mappedBy = "alumnos", cascade=CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<Curso>();
 	// FIN RELACIONES
+	private Long idTemporalCurso;
 
 	public Alumno() {
 		// TODO Auto-generated constructor stub
@@ -142,10 +143,19 @@ public class Alumno {
 		this.estado = estado;
 	}
 
+	public Long getIdTemporalCurso() {
+		return idTemporalCurso;
+	}
+
+	public void setIdTemporalCurso(Long idTemporalCurso) {
+		this.idTemporalCurso = idTemporalCurso;
+	}
+
 	@Override
 	public String toString() {
 		return "Alumno [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", email="
-				+ email + ", telefono=" + telefono + ", estado=" + estado + ", cursos=" + cursos + "]";
+				+ email + ", telefono=" + telefono + ", estado=" + estado + ", cursos=" + cursos + ", idTemporalCurso="
+				+ idTemporalCurso + "]";
 	}
 
 }
