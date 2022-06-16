@@ -11,9 +11,7 @@ import ar.edu.unju.fi.tp5.entity.Docente;
 
 @Component
 public class ListaBecas {
-	/*
-	 * Clase que gestiona la lista de Becas.
-	 * */
+
 	private ArrayList<Beca> becas;
 	
 	public ListaBecas() {

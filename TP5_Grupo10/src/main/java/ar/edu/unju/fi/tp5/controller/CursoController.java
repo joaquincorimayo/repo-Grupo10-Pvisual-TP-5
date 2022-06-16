@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unju.fi.tp5.entity.Curso;
 import ar.edu.unju.fi.tp5.service.ICursoService;
+import ar.edu.unju.fi.tp5.service.IDocenteService;
 
 @Controller
 @RequestMapping("/curso")
@@ -28,25 +29,31 @@ public class CursoController {
 	@Autowired
 	@Qualifier("CursoServiceImpList")
 	private ICursoService cursoService;
+	@Autowired
+	@Qualifier("DocenteServiceImpList")
+	private IDocenteService docenteService;
+	
 
 	Logger logger = LoggerFactory.getLogger(CursoController.class);
 
 	@GetMapping("/nuevo")
-	public String getFormularioCursoNuevoPage(Model model) {
+	public String getFormNewCursoPage(Model model) {
 		model.addAttribute("curso", cursoService.getCurso());
+		model.addAttribute("docentes", docenteService.getListaDocente());
 		logger.info(
-				"Method: getFormularioCursoNuevoPage() - Information: Se envia un objeto Curso a la pagina nuevo_curso");
+				"Method: getFormNewCursoPage() - Information: Se envia un nuevo objeto Curso");
 		return "nuevo_curso";
 	}
 
 	@PostMapping("/guardar")
-	public ModelAndView getListaCursoPage(@Validated @ModelAttribute("curso") Curso curso,
+	public ModelAndView saveNewCursoPage(@Validated @ModelAttribute("curso") Curso curso,
 			BindingResult bindingResult) {
 		ModelAndView mav;
 		if (bindingResult.hasErrors()) {
 			logger.info("Method: saveNewCursoPage() - Information: Error en ingreso de datos para Curso.");
 			mav = new ModelAndView("nuevo_curso");
 			mav.addObject("curso", curso);
+			mav.addObject("docentes", docenteService.getListaDocente());
 			return mav;
 		}
 		
@@ -74,13 +81,12 @@ public class CursoController {
 		return mav;
 	}
 
-	// Peticiones de editar y eliminar
-
 	@GetMapping("/editar/{id}")
 	public ModelAndView getEditarCursoPage(@PathVariable(value = "id") Long id) {
-		logger.info("Method: getEditarCursoPage() - Information: Se edita al Alumno con id "+id );
+		logger.info("Method: getEditarCursoPage() - Information: Se edita al Alumno con id "+ id );
 		ModelAndView mav = new ModelAndView("edicion_curso");
 		Optional<Curso> curso = cursoService.buscarCurso(id);
+		mav.addObject("docentes", docenteService.getListaDocente());
 		mav.addObject("curso", curso.get());
 		return mav;
 	}
@@ -90,10 +96,12 @@ public class CursoController {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Method: editarDatosCurso() - Information: Error en ingreso de datos");
+			System.out.println("ERROR EN DATOOO: "+curso.toString());
 			ModelAndView mav = new ModelAndView("edicion_curso");
 			mav.addObject("curso", curso);
 			return mav;
 		}
+		
 		cursoService.modificarCurso(curso);
 		ModelAndView mav = new ModelAndView("redirect:/curso/listaCursos");
 		

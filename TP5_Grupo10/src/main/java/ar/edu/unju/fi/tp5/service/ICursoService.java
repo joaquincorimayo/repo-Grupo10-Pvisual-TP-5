@@ -14,5 +14,5 @@ public interface ICursoService {
 	public Optional<Curso> buscarCurso(Long id);
 	public void eliminarCurso(Long id);
 	public List<Curso> getListaCursos();
-
+	public Curso devolverCurso(String titulo);
 }

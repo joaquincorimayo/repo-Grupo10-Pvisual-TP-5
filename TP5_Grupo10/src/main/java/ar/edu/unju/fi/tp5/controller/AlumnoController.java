@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unju.fi.tp5.entity.Alumno;
+import ar.edu.unju.fi.tp5.entity.Curso;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
+import ar.edu.unju.fi.tp5.service.ICursoService;
 
 @Controller
 @RequestMapping("/alumno")
@@ -30,10 +32,15 @@ public class AlumnoController {
 	@Qualifier("AlumnoServiceImpList")
 	private IAlumnoService alumnoService;
 
+	@Autowired
+	@Qualifier("CursoServiceImpList")
+	private ICursoService cursoService;
+	
 	
 	@GetMapping("/nuevo")
 	public String getFormANewPage(Model model) {
 		model.addAttribute("alumno", alumnoService.getAlumno());
+		model.addAttribute("cursos", cursoService.getListaCursos());
 		logger.info("Method: getFormANewPage() - Information: Se envia un objeto Alumno a la pagina nuevo_alumno");
 		return "nuevo_alumno";
 	}
@@ -42,6 +49,7 @@ public class AlumnoController {
 	public ModelAndView saveNewAlumnoPage(@Validated @ModelAttribute("alumno") Alumno alumno,
 			BindingResult bR) {
 		ModelAndView mav;
+		
 		// Control de validacion para el nuevo alumno.
 		if (bR.hasErrors()) {
 			logger.info("Method: saveNewAlumnoPage() - Information: Error en ingreso de datos para Alumno.");
@@ -86,7 +94,6 @@ public class AlumnoController {
 	@PostMapping("/modificar")
 	public ModelAndView editarDatosAlumno(@Validated @ModelAttribute("alumno") Alumno alumno,
 			BindingResult br) {
-		
 		// Validacion de datos
 		if (br.hasErrors()) {
 			logger.info("Method: editarDatosAlumno() - Information: Error en ingreso de datos");

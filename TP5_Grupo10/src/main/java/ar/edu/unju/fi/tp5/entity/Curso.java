@@ -26,7 +26,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Entity
 @Table(name = "CURSO")
@@ -73,25 +72,27 @@ public class Curso {
 
 	@Column(name = "CUR_SEMANAS")
 	private int dos;
-	
+
 	@Column(name = "CUR_ESTADO")
 	private boolean estado;
-	
+
 	// RELACION DOCENTE-CURSO Uni-direccional
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="CUR_DOCENTE_ID")
+	@NotNull(message = "Debe tener asignado un docente")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "DOC_ID")
 	private Docente docente;
-	
+
 	// RELACION BECA-CURSO Uni-direccional
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CUR_BECA_ID")
+//	@OneToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name = "BEC_ID")
+	@OneToOne(mappedBy = "curso")
 	private Beca beca;
+
 	
-	// RELACION ALUMNO-CURSO Uni-direccional (JOIN TABLE)
-	//@ManyToMany(mappedBy="cursos", fetch = FetchType.LAZY)
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private List<Alumno> alumnos = new ArrayList<Alumno>();
-	
+	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+	//@JoinColumn(name="ALU_ID")
+	@ManyToMany(mappedBy = "cursos",fetch = FetchType.EAGER)
+	private List<Alumno> alumnos;
 	// FIN RELACIONES
 
 	public Curso() {
@@ -109,11 +110,8 @@ public class Curso {
 		this.cantidadHoras = cantidadHoras;
 		this.modalidad = modalidad;
 		this.docente = docente;
-//		Period period = Period.between(fechaInicio, fechaFin);
 		this.dos = 2;
 	}
-	
-	
 
 	public boolean isEstado() {
 		return estado;
@@ -203,10 +201,30 @@ public class Curso {
 		this.id = id;
 	}
 
+	public Beca getBeca() {
+		return beca;
+	}
+
+	public void setBeca(Beca beca) {
+		this.beca = beca;
+	}
+
+
+
+	public List<Alumno> getAlumnos() {
+		return alumnos;
+	}
+
+	public void setAlumnos(List<Alumno> alumnos) {
+		this.alumnos = alumnos;
+	}
+
 	@Override
 	public String toString() {
-		return "Curso [codigo=" + codigo + ", titulo=" + titulo + ", categoria=" + categoria + ", fechaFin=" + fechaFin
-				+ ", fechaInicio=" + fechaInicio + ", cantidadHoras=" + cantidadHoras + ", modalidad=" + modalidad
-				+ ", docente=" + docente + "]";
+		return "Curso [id=" + id + ", codigo=" + codigo + ", titulo=" + titulo + ", categoria=" + categoria
+				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", cantidadHoras=" + cantidadHoras
+				+ ", modalidad=" + modalidad + ", dos=" + dos + ", estado=" + estado + ", docente=" + docente
+				+ ", beca=" + beca + ", alumnos=" + alumnos + "]";
 	}
+
 }

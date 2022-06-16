@@ -4,13 +4,19 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ar.edu.unju.fi.tp5.entity.Alumno;
 import ar.edu.unju.fi.tp5.repository.IAlumnoRepository;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
+import ar.edu.unju.fi.tp5.service.ICursoService;
 
 @Service("AlumnoServiceImpList")
 public class AlumnoServiceImp implements IAlumnoService {
+
+	@Autowired
+	@Qualifier("CursoServiceImpList")
+	private ICursoService cursoService;
 
 	@Autowired
 	private IAlumnoRepository alumnoRepository;
@@ -25,9 +31,9 @@ public class AlumnoServiceImp implements IAlumnoService {
 		for (Alumno a : alumnoRepository.findAll()) {
 			if (a.getDni().equals(dni)) {
 				if (a.isEstado() == true) {
-					bandera=true;
+					bandera = true;
 				} else {
-					bandera=false;		
+					bandera = false;
 				}
 			}
 		}
@@ -39,6 +45,12 @@ public class AlumnoServiceImp implements IAlumnoService {
 		
 		if(!existUser(alumno.getDni())) {
 			alumno.setEstado(true);
+			//RECIBO ESTO: Alumno [id=null, dni=40154287, nombre=joaquin, apellido=corimayo, 
+			// email=joaquin97corimayo@gmail.com, telefono=1244124, estado=true, 
+			// cursos=[ar.edu.unju.fi.tp5.entity.Curso@2b14669a]]
+
+			//cursoService.devolverCurso(null)
+//			System.out.println("RECIBO ESTO: "+ alumno.getCursos().add(null));
 			alumnoRepository.save(alumno);
 			return true;
 		}
@@ -47,7 +59,7 @@ public class AlumnoServiceImp implements IAlumnoService {
 
 	@Override
 	public void modificarAlumno(Alumno alumno) {
-		alumnoRepository.save(alumno);		
+		alumnoRepository.save(alumno);
 	}
 
 	@Override

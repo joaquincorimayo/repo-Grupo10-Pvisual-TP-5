@@ -13,8 +13,6 @@ import ar.edu.unju.fi.tp5.service.ICursoService;
 @Service("CursoServiceImpList")
 public class CursoServiceImp implements ICursoService {
 
-//	@Autowired
-//	private ListaCursos listaCursos;
 	@Autowired
 	ICursoRepository cursoRepository;
 
@@ -29,6 +27,7 @@ public class CursoServiceImp implements ICursoService {
 		if(!existUser(curso.getCodigo())) {
 			curso.setEstado(true);
 			cursoRepository.save(curso);
+			System.out.println("DATOS CURSO: " + curso.toString());
 			return true;
 		}
 		
@@ -76,6 +75,11 @@ public class CursoServiceImp implements ICursoService {
 		curso.get().setEstado(false);
 		cursoRepository.save(curso.get());
 		
+	}
+	
+	@Override
+	public Curso devolverCurso(String titulo) {
+		return cursoRepository.findByTitulo(titulo);
 	}
 
 }

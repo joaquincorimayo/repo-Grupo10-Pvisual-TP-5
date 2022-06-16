@@ -118,9 +118,12 @@ public class Docente {
 		this.id = id;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Docente [legajo=" + legajo + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
-				+ ", telefono=" + telefono + "]";
+		return "Docente [id=" + id + ", legajo=" + legajo + ", nombre=" + nombre + ", apellido=" + apellido + ", email="
+				+ email + ", telefono=" + telefono + ", estado=" + estado + "]";
 	}
+
+
 }
