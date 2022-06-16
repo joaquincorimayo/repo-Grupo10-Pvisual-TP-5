@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.tp5.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unju.fi.tp5.entity.Beca;
 import ar.edu.unju.fi.tp5.service.IBecaService;
+import ar.edu.unju.fi.tp5.service.ICursoService;
 
 @Controller
 @RequestMapping("/beca")
@@ -28,57 +30,78 @@ public class BecaController {
 	@Qualifier("BecaServiceImpList")
 	private IBecaService becaService;
 
-	// private ListaBecas listabeca = new ListaBecas();
+	@Autowired
+	@Qualifier("CursoServiceImpList")
+	private ICursoService cursoService;
+
 	Logger logger = LoggerFactory.getLogger(BecaController.class);
 
 	@GetMapping("/nuevo")
-	public String getFormularioBecaNuevoPage(Model model) {
+	public String getNewBecaPage(Model model) {
+		logger.info("Method: getNewBecaPage() - Information: Envia un objeto Beca");
 		model.addAttribute("beca", becaService.getBeca());
-		logger.info(
-				"Method: getFormularioBecaNuevoPage() - Information: Se envia un objeto Beca a la pagina nuevo_beca");
+		model.addAttribute("cursos", cursoService.getListaCursos());
 		return "nuevo_beca";
+
 	}
 
 	@PostMapping("/guardar")
-	public ModelAndView getListaBecaPage(@Validated @ModelAttribute("beca") Beca beca, BindingResult bindingResult) {
+	public ModelAndView saveNewBecaPage(@Validated @ModelAttribute("beca") Beca beca, BindingResult bindingResult) {
+		ModelAndView mav;
 		if (bindingResult.hasErrors()) {
-			ModelAndView mav = new ModelAndView("nuevo_beca");
+			logger.info("Method: saveNewBecaPage() - Information: Error en ingreso de datos para beca.");
+			mav = new ModelAndView("nuevo_beca");
+			mav.addObject("cursos", cursoService.getListaCursos());
 			mav.addObject("beca", beca);
 			return mav;
 		}
 
-		ModelAndView mav = new ModelAndView("lista_becas");
-		if (becaService.guardarBeca(beca)) {
-			logger.info("Method: getListaBecaPage() - Information: Se agregó un objeto al arrayList de beca");
+		boolean status = becaService.guardarBeca(beca);
+
+		if (status) {
+			logger.info("Method: saveNewBecaPage() - Information: Se agrego la beca.");
+			mav = new ModelAndView("redirect:/beca/listaBecas");
+		} else {
+			logger.info("Method: saveNewBecaPage() - Information: No se agrego la beca.");
+			mav = new ModelAndView("nuevo_beca");
+			mav.addObject("beca", beca);
+			mav.addObject("status", status);
 		}
-		List<Beca> becas = becaService.getListaBecas();
-		mav.addObject("becas", becas);
+
 		return mav;
 	}
 
 	@GetMapping("/listaBecas")
-	public ModelAndView getListadoBecaPage() {
-		logger.info("Method: getListadoBecaPage() - Information: Se visualiza las becas registradas");
-		ModelAndView mav = new ModelAndView("lista_becas");
-		List<Beca> becas = becaService.getListaBecas();
-		mav.addObject("becas", becas);
+	public ModelAndView getListBecaPage() {
+		ModelAndView mav;
+		if (becaService.getListaBecas().size() == 0) {
+			mav = new ModelAndView("nuevo_beca");
+			mav.addObject("beca", becaService.getBeca());
+			mav.addObject("cursos", cursoService.getListaCursos());
+
+		} else {
+			logger.info("Method: getListBecaPage() - Information: Se visualiza las becas registradas");
+			mav = new ModelAndView("lista_becas");
+			List<Beca> becas = becaService.getListaBecas();
+			mav.addObject("becas", becas);
+		}
+
 		return mav;
 	}
-	
+
 	// Peticiones de editar y eliminar
 
-	@GetMapping("/editar/{codigo}")
-	public ModelAndView getEditarBecaPage(@PathVariable(value = "codigo") int codigo) {
+	@GetMapping("/editar/{id}")
+	public ModelAndView getEditarBecaPage(@PathVariable(value = "id") Long id) {
 		logger.info("Method: getEditarBecaPage() - Information: ");
 		ModelAndView mav = new ModelAndView("edicion_beca");
-		Beca beca = becaService.buscarBeca(codigo);
-		mav.addObject("beca", beca);
+		Optional<Beca> beca = becaService.buscarBeca(id);
+		mav.addObject("beca", beca.get());
 		return mav;
 	}
 
 	@PostMapping("/modificar")
-	public ModelAndView editarDatosBeca(@Validated @ModelAttribute("beca") Beca beca,
-			BindingResult bindingResult) {
+	public ModelAndView editarDatosBeca(@Validated @ModelAttribute("beca") Beca beca, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			logger.info("Method: editarDatosBeca() - Information: Error");
@@ -86,16 +109,16 @@ public class BecaController {
 			mav.addObject("beca", beca);
 			return mav;
 		}
-		ModelAndView mav = new ModelAndView("redirect:/beca/listaBecas");
 		becaService.modificarBeca(beca);
+		ModelAndView mav = new ModelAndView("redirect:/beca/listaBecas");
 		return mav;
 	}
 
-	@GetMapping("/eliminar/{codigo}")
-	public ModelAndView eliminarDatosBeca(@PathVariable(value = "codigo") int codigo) {
+	@GetMapping("/eliminar/{id}")
+	public ModelAndView eliminarDatosBeca(@PathVariable(value = "id") Long id) {
 		logger.info("Method: eliminarDatosBeca() - Information: ");
 		ModelAndView mav = new ModelAndView("redirect:/beca/listaBecas");
-		becaService.eliminarBeca(codigo);
+		becaService.eliminarBeca(id);
 		return mav;
 	}
 

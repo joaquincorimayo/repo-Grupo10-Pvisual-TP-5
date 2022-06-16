@@ -48,12 +48,7 @@
 					<td th:text="${curso.fechaInicio}"></td>
 					<td th:text="${curso.cantidadHoras}"></td>
 					<td th:text="${curso.modalidad}"></td>
-					
-					<td >
-						<p th:each="docente: ${curso.docente}">
-							<span th:text="${docente.apellido}"></span>
-						</p>
-					</td>
+					<td th:text="${curso.docente.apellido}"></td> 
 					<td>
 						<a th:href="@{/curso/editar/}+${curso.id}" id="editarCurso" class="btn btn-warning">Editar</a>
 						<a th:href="@{/curso/eliminar/}+${curso.id}" id="eliminarCurso" class="btn btn-danger">Eliminar</a>

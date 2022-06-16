@@ -16,15 +16,30 @@
 	
 	<form class="card p-3 bg-light" th:action="@{/curso/modificar}"
 		method="POST" th:object="${curso}">
-
+	
 		<!-- 		Propiedad que no debe ser modificada, solamente se visualiza.-->
 		<div class="row mb-3">
-			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
-			<input type="hidden" th:field="*{codigo}"> <label for="inputCodigo"
-				class="col-sm-2 col-form-label">Codigo</label>
+			<input type="hidden" th:field="*{codigo}"> 
+			<label for="inputCodigo" class="col-sm-2 col-form-label">Codigo</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputCodigo"
-					th:value="*{codigo}" disabled="disabled">
+				<input type="text" class="form-control" id="inputCodigo" th:value="*{codigo}" disabled="disabled">
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<input type="hidden" th:field="*{id}"> 
+			<label for="inputid" class="col-sm-2 col-form-label">ID</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputid" th:value="*{id}" disabled="disabled">
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<input type="hidden" th:field="*{estado}"> <label for="inputestado"
+				class="col-sm-2 col-form-label">ESTADO</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="inputestado"
+					th:value="*{estado}" disabled="disabled">
 			</div>
 		</div>
 	
@@ -91,17 +106,15 @@
 		</div>
 		
 		<div class="row mb-3">
-			<label for="inputDocente" class="col-sm-2 col-form-label">Docente</label>
-			<div class="col-6">
-					  <select class="form-select" id="inputModalidad" th:field="*{docente.apellido}" >
-					    <option value="Sanchez" >Alejandro Sanchez</option>
-					    <option value="Lamas">María Lamas</option>
-					    <option value="Perez">Martina Perez</option>
-					    <option value="Miranda">Pedro Miranda</option>
-					  </select>
-					  <div class="text-danger" th:if="${#fields.hasErrors('docente.apellido')}" th:errors="*{docente.apellido}"></div>
+			<label class="col-sm-2 col-form-label">Seleccionar Docente: </label>
+			<div class="col-sm-10">
+				<select class="form-control input-lg" th:field="*{docente}">
+						<option th:each="c : ${docentes}" th:value="${c.id}" th:text="${c.nombre}"></option>
+				</select>
+				<div class="text-danger" th:if="${#fields.hasErrors('docente')}" th:errors="*{docente}"></div>
 			</div>
 		</div>
+		
 		<!-- 		Fin propiedades que pueden ser modificadas.-->
 
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">

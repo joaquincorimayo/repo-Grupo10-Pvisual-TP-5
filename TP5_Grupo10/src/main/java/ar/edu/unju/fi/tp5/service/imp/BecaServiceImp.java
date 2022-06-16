@@ -4,54 +4,67 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Beca;
 import ar.edu.unju.fi.tp5.repository.IBecaRepository;
-import ar.edu.unju.fi.tp5.repository.ICursoRepository;
 import ar.edu.unju.fi.tp5.service.IBecaService;
-import ar.edu.unju.fi.tp5.util.ListaBecas;
+import ar.edu.unju.fi.tp5.service.ICursoService;
 
 @Service("BecaServiceImpList")
 public class BecaServiceImp implements IBecaService {
 
-//	@Autowired
-//	private ListaBecas listaBecas;
 	@Autowired
 	IBecaRepository becaRepository;
 
+	@Autowired
+	@Qualifier("CursoServiceImpList")
+	private ICursoService cursoService;
+	
 	@Override
 	public Beca getBeca() {
 		return new Beca();
 	}
+	
+	@Override
+	public boolean existBeca(int codigo) {
+		boolean bandera = false;
+		for (Beca a : becaRepository.findAll()) {
+			if (a.getCodigo() == codigo) {
+				if (a.isEstado() == true) {
+					bandera = true;
+				} else {
+					bandera = false;
+				}
+			}
+		}
+		return bandera;
+	}
 
 	@Override
 	public boolean guardarBeca(Beca beca) {
-		beca.setEstado(true);
-		if(becaRepository.save(beca)!=null) {
+		if (!existBeca(beca.getCodigo())) {
+			beca.setEstado(true);
+			becaRepository.save(beca);
+			System.out.println("GUARDO ESTO: "+ beca.toString());
 			return true;
 		}
 		return false;
-
 	}
 
 	@Override
 	public void modificarBeca(Beca beca) {
-		for (Beca bc : becaRepository.findAll()) {
-			if (bc.getCodigo() == beca.getCodigo()) {
-				bc.setCodigo(beca.getCodigo());
-				bc.setCurso(beca.getCurso());
-				bc.setFechaFin(beca.getFechaFin());
-				bc.setFechaInicio(beca.getFechaInicio());
-			}
-		}
+		System.out.println("MODIFICO ESTO: "+ beca.toString());
+		becaRepository.save(beca);
+		System.out.println("DESPUES DE MODIFICAR: "+ beca.toString());
 	}
 
 	@Override
-	public void eliminarBeca(int codigo) {
-		Beca beca = buscarBeca(codigo);
-		beca.setEstado(false);
-		becaRepository.save(beca);
+	public void eliminarBeca(Long id) {
+		Optional<Beca> beca = becaRepository.findById(id);
+		beca.get().setEstado(false);
+		becaRepository.save(beca.get());
 	}
 
 	@Override
@@ -61,8 +74,8 @@ public class BecaServiceImp implements IBecaService {
 	}
 
 	@Override
-	public Beca buscarBeca(int codigo) {
-		return becaRepository.findByCodigo(codigo);
+	public Optional<Beca> buscarBeca(Long id) {
+		return becaRepository.findById(id);
 	}
 
 }

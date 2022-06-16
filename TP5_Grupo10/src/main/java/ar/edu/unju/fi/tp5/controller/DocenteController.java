@@ -32,7 +32,6 @@ public class DocenteController {
 
 	@GetMapping("/nuevo")
 	public String getFormularioDocenteNuevoPage(Model model) {
-		// Se envia un objeto de tipo Docente a la pagina nuevo_docente.html
 		model.addAttribute("docente", docenteService.getDocente());
 		logger.info("Method: getFormularioDocenteNuevoPage() - Information: Se envia un objeto Docente a la pagina nuevo_docente");
 		return "nuevo_docente";
@@ -41,10 +40,7 @@ public class DocenteController {
 	@PostMapping("/guardar")
 	public ModelAndView saveNewDocentePage(@Validated @ModelAttribute("docente") Docente docente,
 			BindingResult bindingResult) {
-		// @Validate proviene de Spring Framework Validation
-		// el objeto bindingResult contiene el resultado de la validacion,
-		// (los errores que pueden haber ocurrido)
-		// Control de validacion para el nuevo docente.
+		
 		ModelAndView mav;
 		if (bindingResult.hasErrors()) {
 			logger.info("Method: saveNewDocentePage() - Information: Error en ingreso de datos para Docente.");
@@ -71,14 +67,11 @@ public class DocenteController {
 	@GetMapping("/listaDocentes")
 	public ModelAndView getListadoDocentesPage() {
 		logger.info("Method: getListadoDocentePage() - Information: Se recuperan los regitros de la BD para Docente");
-		// Permite visualizar docentes que contiene el arraylist
 		ModelAndView mav = new ModelAndView("lista_docentes");
 		List<Docente> docentes = docenteService.getListaDocente();
 		mav.addObject("docentes", docentes);
 		return mav;
 	}
-
-	// Peticiones de editar y eliminar
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView getEditarDocentePage(@PathVariable(value = "id") Long id) {

@@ -31,18 +31,16 @@
 					<th>Curso</th>
 					<th>Fecha de Inicio</th>
 					<th>Fecha de Fin</th>
-					<th>Estado</th>
 					<th>Opciones</th>
 				</tr>
 				<tr th:each="beca: ${becas}">
 					<td th:text="${beca.codigo}"></td>
-<!-- 					<td th:text="${beca.curso.titulo}"></td> -->
+					<td th:text="${beca.curso.titulo}"></td>
 					<td th:text="${beca.fechaInicio}"></td>
 					<td th:text="${beca.fechaFin}"></td>
-					<td th:text="${beca.estado}"></td>
 					<td>
-						<a th:href="@{/beca/editar/}+${beca.codigo}" id="editarBeca" class="btn btn-warning">Editar</a>
-						<a th:href="@{/beca/eliminar/}+${beca.codigo}" id="eliminarBeca" class="btn btn-danger">Eliminar</a>
+						<a th:href="@{/beca/editar/}+${beca.id}" id="editarBeca" class="btn btn-warning">Editar</a>
+						<a th:href="@{/beca/eliminar/}+${beca.id}" id="eliminarBeca" class="btn btn-danger">Eliminar</a>
 					</td>
 				</tr>
 			</table>

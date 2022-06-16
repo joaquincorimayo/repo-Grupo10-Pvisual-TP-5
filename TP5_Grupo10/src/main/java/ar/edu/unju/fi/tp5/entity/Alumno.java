@@ -10,8 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -51,13 +51,13 @@ public class Alumno {
 	@NotEmpty(message = "El teléfono del alumno no puede ser vacío.")
 	@Column(name = "ALU_TELEFONO")
 	private String telefono;
-	
-	@Column(name="ALU_ESTADO")
+
+	@Column(name = "ALU_ESTADO")
 	private boolean estado;
 
-	// RELACIONES	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable(name = "ALUMNOCURSO")
+	// RELACIONES
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	//@OneToMany(mappedBy = "alumnos", cascade=CascadeType.ALL)
 	private List<Curso> cursos = new ArrayList<Curso>();
 	// FIN RELACIONES
 
@@ -65,13 +65,17 @@ public class Alumno {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Alumno(String dni, String nombre, String apellido, String email, String telefono) {
+	public Alumno(Long id, String dni, String nombre, String apellido, String email, String telefono, boolean estado,
+			List<Curso> cursos) {
 		super();
+		this.id = id;
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.telefono = telefono;
+		this.estado = estado;
+		this.cursos = cursos;
 	}
 
 	public String getDni() {
@@ -122,8 +126,13 @@ public class Alumno {
 		this.id = id;
 	}
 
-	
-	
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
 
 	public boolean isEstado() {
 		return estado;
@@ -138,7 +147,5 @@ public class Alumno {
 		return "Alumno [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", email="
 				+ email + ", telefono=" + telefono + ", estado=" + estado + ", cursos=" + cursos + "]";
 	}
-	
-	
-	
+
 }

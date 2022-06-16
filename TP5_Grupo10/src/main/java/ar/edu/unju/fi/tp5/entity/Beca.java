@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
@@ -51,7 +51,9 @@ public class Beca {
 	private boolean estado;
 
 	// RELACION BECA-CURSO Uni-direccional
-	@OneToOne(mappedBy = "beca", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@NotNull(message = "Debe tener asignado un curso")
+	@OneToOne
+    @JoinColumn(name = "CUR_ID")
 	private Curso curso;
 	// FIN RELACIONES
 
@@ -120,7 +122,9 @@ public class Beca {
 
 	@Override
 	public String toString() {
-		return "Beca [codigo=" + codigo + ", curso=" + curso + ", fechaFin=" + fechaFin + ", fechaInicio=" + fechaInicio
-				+ ", estado=" + estado + "]";
+		return "Beca [id=" + id + ", codigo=" + codigo + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
+				+ ", estado=" + estado + ", curso=" + curso + "]";
 	}
+
+	
 }
