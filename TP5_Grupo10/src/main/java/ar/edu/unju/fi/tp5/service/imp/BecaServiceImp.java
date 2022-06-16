@@ -47,7 +47,6 @@ public class BecaServiceImp implements IBecaService {
 		if (!existBeca(beca.getCodigo())) {
 			beca.setEstado(true);
 			becaRepository.save(beca);
-			System.out.println("GUARDO ESTO: "+ beca.toString());
 			return true;
 		}
 		return false;
@@ -55,9 +54,7 @@ public class BecaServiceImp implements IBecaService {
 
 	@Override
 	public void modificarBeca(Beca beca) {
-		System.out.println("MODIFICO ESTO: "+ beca.toString());
 		becaRepository.save(beca);
-		System.out.println("DESPUES DE MODIFICAR: "+ beca.toString());
 	}
 
 	@Override

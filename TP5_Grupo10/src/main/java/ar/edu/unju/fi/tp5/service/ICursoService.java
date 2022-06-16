@@ -15,4 +15,5 @@ public interface ICursoService {
 	public void eliminarCurso(Long id);
 	public List<Curso> getListaCursos();
 	public Curso devolverCurso(String titulo);
+	public Curso dameElCurso(Long id);
 }

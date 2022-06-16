@@ -54,6 +54,7 @@ public class AlumnoController {
 		if (bR.hasErrors()) {
 			logger.info("Method: saveNewAlumnoPage() - Information: Error en ingreso de datos para Alumno.");
 			mav = new ModelAndView("nuevo_alumno");
+			mav.addObject("cursos", cursoService.getListaCursos());
 			mav.addObject("alumno", alumno);
 			return mav;
 		}
@@ -78,7 +79,9 @@ public class AlumnoController {
 		logger.info("Method: getListAlumnoPage() - Information: Se recuperan los regitros de la BD para Alumnos");
 		ModelAndView mav = new ModelAndView("lista_alumnos");
 		List<Alumno> alumnos = alumnoService.getListaAlumnos();
+		List<Curso> cursos = cursoService.getListaCursos();
 		mav.addObject("alumnos", alumnos);
+		mav.addObject("cursos", cursos);
 		return mav;
 	}
 

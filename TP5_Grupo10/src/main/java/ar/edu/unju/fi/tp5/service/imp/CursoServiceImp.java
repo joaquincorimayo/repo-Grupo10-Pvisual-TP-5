@@ -27,7 +27,6 @@ public class CursoServiceImp implements ICursoService {
 		if(!existUser(curso.getCodigo())) {
 			curso.setEstado(true);
 			cursoRepository.save(curso);
-			System.out.println("DATOS CURSO: " + curso.toString());
 			return true;
 		}
 		
@@ -80,6 +79,11 @@ public class CursoServiceImp implements ICursoService {
 	@Override
 	public Curso devolverCurso(String titulo) {
 		return cursoRepository.findByTitulo(titulo);
+	}
+	
+	@Override
+	public Curso dameElCurso(Long id) {
+		return cursoRepository.findById(id).get();
 	}
 
 }
