@@ -20,11 +20,10 @@
 
 				<div class="mb-3">
 					<label class="form-label">Alumno: </label> 
-					<label class="form-label" th:text="${id}"></label> 
-<!-- 					<select -->
-<!-- 						class="form-control" th:field="*{alumno.id}"> -->
-<!-- 						<option th:value="${unalumno.id}" th:text="${unalumno.dni}"></option> -->
-<!-- 					</select> -->
+					<label class="form-label" th:text="${alumno.id}"></label>
+					<select class="form-control" th:field="*{alumno.id}">
+						<option th:value="${alumno.id}" th:text="${alumno.dni}"></option>
+					</select>
 				</div>
 
 				<div class="mb-3">

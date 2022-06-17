@@ -44,7 +44,7 @@ public class AlumnoCursoController {
 		ModelAndView modelView = new ModelAndView("inscripcion");
 		modelView.addObject("unaInscripcion", alumnoCursoService.nuevoAlumnoCurso());
 		Alumno alumno = alumnoService.buscarAlumno(id);
-		modelView.addObject("alumno", alumno.getDni());
+		modelView.addObject("alumno", alumno);
 		modelView.addObject("cursos", cursoService.listarCursos());
 		return modelView;
 	}
