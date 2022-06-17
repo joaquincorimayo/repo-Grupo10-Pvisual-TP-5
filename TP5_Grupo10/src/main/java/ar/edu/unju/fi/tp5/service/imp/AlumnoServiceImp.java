@@ -1,23 +1,31 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ar.edu.unju.fi.tp5.entity.Alumno;
 import ar.edu.unju.fi.tp5.repository.IAlumnoRepository;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
-import ar.edu.unju.fi.tp5.service.ICursoService;
+import ar.edu.unju.fi.tp5.util.ListaAlumnos;
+
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 
 @Service("AlumnoServiceImpList")
 public class AlumnoServiceImp implements IAlumnoService {
 
-	@Autowired
-	@Qualifier("CursoServiceImpList")
-	private ICursoService cursoService;
+	private static final Log logs = LogFactory.getLog(AlumnoServiceImp.class);
 
+	@Autowired
+	private ListaAlumnos lista;
 	@Autowired
 	private IAlumnoRepository alumnoRepository;
 
@@ -26,51 +34,56 @@ public class AlumnoServiceImp implements IAlumnoService {
 		return new Alumno();
 	}
 
-	public boolean existUser(String dni) {
-		boolean bandera = false;
-		for (Alumno a : alumnoRepository.findAll()) {
-			if (a.getDni().equals(dni)) {
-				if (a.isEstado() == true) {
-					bandera = true;
-				} else {
-					bandera = false;
-				}
-			}
-		}
-		return bandera;
-	}
-
 	@Override
-	public boolean guardarAlumno(Alumno alumno) {
-		
-		if(!existUser(alumno.getDni())) {
-			alumno.setEstado(true);
-			alumnoRepository.save(alumno);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public void modificarAlumno(Alumno alumno) {
+	public void guardarAlumno(Alumno alumno) {
+		alumno.setEstado(true);
 		alumnoRepository.save(alumno);
+		logs.info("Se agrego al alumno");
+		lista.getAlumnos().add(alumno);
 	}
 
 	@Override
 	public void eliminarAlumno(Long id) {
-		Optional<Alumno> alumno = alumnoRepository.findById(id);
-		alumno.get().setEstado(false);
-		alumnoRepository.save(alumno.get());
+
+		for (int i = 0; i < lista.getAlumnos().size(); i++) {
+			if (lista.getAlumnos().get(i).getId() == id) {
+				lista.getAlumnos().get(i).setEstado(false);
+				alumnoRepository.save(lista.getAlumnos().get(i));
+			}
+		}
 	}
 
 	@Override
-	public List<Alumno> getListaAlumnos() {
-		List<Alumno> alumnos = alumnoRepository.findByEstado(true);
-		return alumnos;
+	public void modificarAlumno(Alumno alumno) {
+		for (int i = 0; i < lista.getAlumnos().size(); i++) {
+			if (lista.getAlumnos().get(i).getId() == alumno.getId()) {
+				lista.getAlumnos().set(i, alumno);
+				alumnoRepository.save(lista.getAlumnos().get(i));
+			}
+		}
 	}
 
 	@Override
-	public Optional<Alumno> buscarAlumno(Long id) {
-		return alumnoRepository.findById(id);
+	public List<Alumno> listarAlumnos() {
+		List<Alumno> aux_alumnos = new ArrayList<>();
+		for (int i = 0; i < alumnoRepository.findAll().size(); i++) {
+			if (lista.getAlumnos().get(i).isEstado() == true) {
+				aux_alumnos.add(lista.getAlumnos().get(i));
+			}
+		}
+		return aux_alumnos;
 	}
+
+	@Override
+	public Alumno buscarAlumno(Long id) {
+		Alumno alumnoEncontrado = new Alumno();
+		for (int i = 0; i < lista.getAlumnos().size(); i++) {
+			if (lista.getAlumnos().get(i).getId() == id) {
+				alumnoEncontrado = lista.getAlumnos().get(i);
+			}
+		}
+
+		return alumnoEncontrado;
+	}
+
 }

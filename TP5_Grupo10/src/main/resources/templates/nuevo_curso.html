@@ -15,60 +15,83 @@
 	<h1 class="text-center">Formulario para nuevo Curso</h1>
 
 	<h3>Alta de Curso</h3>
-	
+
 	<form class="card p-3 bg-light" th:action="@{/curso/guardar}"
 		method="POST" th:object="${curso}">
 
 		<div class="row mb-3">
 			<label for="inputCodigo" class="col-sm-2 col-form-label">Codigo</label>
-				<div class="col-6">
-				<input type="text" class="form-control" id="inputCodigo" th:field="*{codigo}">
-				<div class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></div>
-				<div class="text-danger" th:if="${status==false}">El codigo ingresado ya existe.</div>
-				</div>
+			<div class="col-6">
+				<input type="text" class="form-control" id="inputCodigo"
+					th:field="*{codigo}">
+				<div class="text-danger" th:if="${#fields.hasErrors('codigo')}"
+					th:errors="*{codigo}"></div>
+				<div class="text-danger" th:if="${status==false}">El codigo
+					ingresado ya existe.</div>
+			</div>
 		</div>
 		<div class="row mb-3">
 			<label for="inputTitulo" class="col-sm-2 col-form-label">Titulo</label>
 			<div class="col-6">
-				<input type="text" class="form-control" id="inputTitulo" placeholder="Ingrese Titulo" th:field="*{titulo}">
-				<div class="text-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
-			</div>
-		</div>
-		<div class="row mb-3">
-			<label   for="inputCategoria" class="col-sm-2 col-form-label" >Categoria</label>
-			<div class="col-6">
-					  <select class="form-select" id="inputCategoria" th:field="*{categoria}" >
-					    <option value="Diploma Ciclo Básico" >Diploma Ciclo Básico</option>
-					    <option value="Diploma Ciclo de Perfeccionamiento">Diploma Ciclo de Perfeccionamiento</option>
-					    <option value="Diploma Ciclo Superior">Diploma Ciclo Superior</option>
-					  </select>
-					  <div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+				<input type="text" class="form-control" id="inputTitulo"
+					placeholder="Ingrese Titulo" th:field="*{titulo}">
+				<div class="text-danger" th:if="${#fields.hasErrors('titulo')}"
+					th:errors="*{titulo}"></div>
 			</div>
 		</div>
 		
+<!-- 		<div class="row mb-3"> -->
+<!-- 			<label for="inputCategoria" class="col-sm-2 col-form-label">Categoria</label> -->
+<!-- 			<div class="col-6"> -->
+<!-- 				<select class="form-select" id="inputCategoria" th:field="*{categoria}"> -->
+<!-- 					<option value="Diploma Ciclo Básico">Diploma Ciclo Básico</option> -->
+<!-- 					<option value="Diploma Ciclo de Perfeccionamiento">Diploma Ciclo de Perfeccionamiento</option> -->
+<!-- 					<option value="Diploma Ciclo Superior">Diploma Ciclo Superior</option> -->
+<!-- 				</select> -->
+<!-- 				<div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+
+
+		<div class="mb-3">
+			<label for="categoriaId" class="form-label">Categoria</label> 
+			<select th:field="*{categoria}" class="form-control" id="categoriaId">
+				<option th:each="c : ${categorias}" th:value="${c}" th:text="${c}" />
+			</select>
+			<div class="text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+		</div>
+		
+
 		<div class="row mb-3">
 			<label for="inputInicio" class="col-sm-2 col-form-label">Fecha Inicio</label>
 			<div class="col-6">
-				<input type="date" class="form-control" id="inputInicio" th:field="*{fechaInicio}">
-				<div class="text-danger" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
+				<input type="date" class="form-control" id="inputInicio"
+					th:field="*{fechaInicio}">
+				<div class="text-danger" th:if="${#fields.hasErrors('fechaInicio')}"
+					th:errors="*{fechaInicio}"></div>
 			</div>
 		</div>
 
 		<div class="row mb-3">
-			<label for="inputFinal" class="col-sm-2 col-form-label">Fecha Final</label>
-				<div class="col-6">
-				<input type="date" class="form-control" id="inputFinal" th:field="*{fechaFin}" >
-				<div class="text-danger" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></div>
-			</div>
-		</div>
-
-
-		
-		<div class="row mb-3">
-			<label for="inputHoras" class="col-sm-2 col-form-label">Cantidad Horas</label>
+			<label for="inputFinal" class="col-sm-2 col-form-label">Fecha
+				Final</label>
 			<div class="col-6">
-				<input type="text" class="form-control" id="inputHoras" th:field="*{cantidadHoras}">
-				<div class="text-danger" th:if="${#fields.hasErrors('cantidadHoras')}" th:errors="*{cantidadHoras}"></div>
+				<input type="date" class="form-control" id="inputFinal"
+					th:field="*{fechaFin}">
+				<div class="text-danger" th:if="${#fields.hasErrors('fechaFin')}"
+					th:errors="*{fechaFin}"></div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<label for="inputHoras" class="col-sm-2 col-form-label">Cantidad
+				Horas</label>
+			<div class="col-6">
+				<input type="text" class="form-control" id="inputHoras"
+					th:field="*{cantidadHoras}">
+				<div class="text-danger"
+					th:if="${#fields.hasErrors('cantidadHoras')}"
+					th:errors="*{cantidadHoras}"></div>
 			</div>
 		</div>
 
@@ -76,37 +99,37 @@
 			<label for="inputModalidad" class="col-sm-2 col-form-label">Modalidad</label>
 			<div class="col-6">
 				<div class="form-check">
-					<input class="form-check-input" type="radio" name="gridRadios" id="inputVirtual" value="Virtual" th:field="*{modalidad}"> 
+					<input class="form-check-input" type="radio" name="gridRadios"
+						id="inputVirtual" value="Virtual" th:field="*{modalidad}">
 					<label class="form-check-label" for="gridRadios2">Virtual </label>
 				</div>
 				<div class="form-check">
-					<input class="form-check-input" type="radio" name="gridRadios" id="inputPresencial" value="Presencial" th:field="*{modalidad}"> 
+					<input class="form-check-input" type="radio" name="gridRadios"
+						id="inputPresencial" value="Presencial" th:field="*{modalidad}">
 					<label class="form-check-label" for="gridRadios2">Presencial</label>
 				</div>
-				<div class="text-danger" th:if="${#fields.hasErrors('modalidad')}" th:errors="*{modalidad}"></div>
+				<div class="text-danger" th:if="${#fields.hasErrors('modalidad')}"
+					th:errors="*{modalidad}"></div>
 			</div>
 		</div>
-		
-		<div class="row mb-3">
-			<label class="col-sm-2 col-form-label">Seleccionar Docente: </label>
-			<div class="col-sm-10">
-				<select class="form-control input-lg" th:field="*{docente}">
-						<option th:each="c : ${docentes}" th:value="${c.id}" th:text="${c.nombre}"></option>
-				</select>
-				<div class="text-danger" th:if="${#fields.hasErrors('docente')}" th:errors="*{docente}"></div>
-			</div>
+
+		<div class="mb-3">
+			<label for="docenteId" class="form-label">Docente</label> <select
+				th:field="*{docente.id}" class="form-control" id="docenteId">
+				<option th:each="docente : ${docentes}" th:value="${docente.id}"
+					th:text="${docente.apellido}+', '+${docente.nombre}" />
+			</select>
+			<div class="text-danger" th:if="${#fields.hasErrors('docente')}"
+				th:errors="*{docente}"></div>
 		</div>
-		
+
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			<button class="btn btn-primary me-md-2" type="submit">Enviar</button>
 			<a th:href="@{/inicio}" id="cancel" class="btn btn-secondary">Cancelar</a>
 		</div>
 
 	</form>
-	
 
-	
 	<footer th:replace="layouts/footer::ffooter"></footer>
-
 </body>
 </html>

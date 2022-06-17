@@ -1,18 +1,22 @@
 package ar.edu.unju.fi.tp5.service;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Beca;
 
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+@Service
 public interface IBecaService {
-	
 	public Beca getBeca();
-	public boolean guardarBeca(Beca beca);
-	public boolean existBeca(int codigo);
-	public void modificarBeca(Beca beca);
+	public void guardarBeca(Beca beca);
 	public void eliminarBeca(Long id);
-	public List<Beca> getListaBecas();
-	public Optional<Beca> buscarBeca(Long id);
-
+	public void modificarBeca(Beca beca);
+	public List<Beca> listarBecas(); 
+	public Beca buscarBeca(Long id); 
 }

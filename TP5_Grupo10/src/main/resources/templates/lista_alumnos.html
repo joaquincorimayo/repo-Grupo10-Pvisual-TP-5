@@ -33,7 +33,6 @@
 					<th>Apellidos</th>
 					<th>E-mail</th>
 					<th>Teléfono</th>
-					<th>Curso Inscripto</th>
 					<th>Opciones</th>
 				</tr>
 				
@@ -43,10 +42,11 @@
 					<td th:text="${alumno.apellido}"></td>
 					<td th:text="${alumno.email}"></td>
 					<td th:text="${alumno.telefono}"></td>
-					<td th:text="${cursos.get(cursos.size()-1).titulo}"></td>	
+					
 					<td>
 						<a th:href="@{/alumno/editar/}+${alumno.id}" id="editarAlumno" class="btn btn-warning">Editar</a>
 						<a th:href="@{/alumno/eliminar/}+${alumno.id}" id="eliminarAlumno" class="btn btn-danger">Eliminar</a>
+						<a th:href="@{/inscripcion/nuevaInscripcion/}+${alumno.id}" id="nuevoCurso" class="btn btn-danger">Incripcion</a>
 					</td>
 				</tr>
 			</table>

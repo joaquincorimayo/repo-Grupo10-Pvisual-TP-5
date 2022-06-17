@@ -1,8 +1,8 @@
 package ar.edu.unju.fi.tp5.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,10 +20,21 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase que representa un objeto de tipo Beca
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 @Component
 @Entity
 @Table(name = "BECA")
-public class Beca {
+public class Beca implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,12 +64,12 @@ public class Beca {
 	// RELACION BECA-CURSO Uni-direccional
 	@NotNull(message = "Debe tener asignado un curso")
 	@OneToOne
-    @JoinColumn(name = "CUR_ID")
+	@JoinColumn(name = "CUR_ID")
 	private Curso curso;
 	// FIN RELACIONES
 
 	public Beca() {
-		
+
 	}
 
 	public Beca(int codigo, Curso curso, LocalDate fechaFin, LocalDate fechaInicio, boolean estado) {
@@ -102,8 +113,6 @@ public class Beca {
 		this.fechaInicio = fechaInicio;
 	}
 
-
-
 	public boolean isEstado() {
 		return estado;
 	}
@@ -125,6 +134,4 @@ public class Beca {
 		return "Beca [id=" + id + ", codigo=" + codigo + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
 				+ ", estado=" + estado + ", curso=" + curso + "]";
 	}
-
-	
 }

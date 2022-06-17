@@ -1,23 +1,28 @@
 package ar.edu.unju.fi.tp5.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import ar.edu.unju.fi.tp5.entity.Alumno;
 import ar.edu.unju.fi.tp5.service.IAlumnoService;
 import ar.edu.unju.fi.tp5.service.IBecaService;
 import ar.edu.unju.fi.tp5.service.ICursoService;
 import ar.edu.unju.fi.tp5.service.IDocenteService;
 
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 @Controller
 public class BeneficiosController {
-
+	private static final Log logs = LogFactory.getLog(BeneficiosController.class);
+// FALTA TERMINAR
 	@Autowired
 	@Qualifier("AlumnoServiceImpList")
 	private IAlumnoService alumnoService;
@@ -36,12 +41,12 @@ public class BeneficiosController {
 
 	@GetMapping("/beneficios")
 	public String getBeneficiosPage(Model model) {
-		boolean banderaAlumnos = false;
-		List<Alumno> alumnos  = new ArrayList<>();
-		alumnos = alumnoService.getListaAlumnos();
-		if(alumnos.size()!=0) {
-			banderaAlumnos=true;
-		}
+//		boolean banderaAlumnos = false;
+//		List<Alumno> alumnos  = new ArrayList<>();
+//		alumnos = alumnoService.getListaAlumnos();
+//		if(alumnos.size()!=0) {
+//			banderaAlumnos=true;
+//		}
 //		
 //		if (alumnos.size()!=0 && this.becaService.getListaBecas().size()!= 0 && this.cursoService.getListaCursos().size() != 0 && this.docenteService.getListaDocente().size() !=0) {
 //			
@@ -52,9 +57,9 @@ public class BeneficiosController {
 //		}else {
 //			model.addAttribute("contenido", "n");
 //		}
-		model.addAttribute("alumnos", alumnos);
-		model.addAttribute("banderaA", banderaAlumnos);
-		
+//		model.addAttribute("alumnos", alumnos);
+//		model.addAttribute("banderaA", banderaAlumnos);
+//		
 		return "beneficios";
 	}
 }

@@ -1,7 +1,6 @@
 package ar.edu.unju.fi.tp5.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +20,17 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unju.fi.tp5.entity.Docente;
 import ar.edu.unju.fi.tp5.service.IDocenteService;
 
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 @Controller
 @RequestMapping("/docente")
 public class DocenteController {
 	Logger logger = LoggerFactory.getLogger(DocenteController.class);
-	
+
 	@Autowired
 	@Qualifier("DocenteServiceImpList")
 	private IDocenteService docenteService;
@@ -33,52 +38,46 @@ public class DocenteController {
 	@GetMapping("/nuevo")
 	public String getFormularioDocenteNuevoPage(Model model) {
 		model.addAttribute("docente", docenteService.getDocente());
-		logger.info("Method: getFormularioDocenteNuevoPage() - Information: Se envia un objeto Docente a la pagina nuevo_docente");
+		logger.info(
+				"Method: getFormularioDocenteNuevoPage() - Information: Se envia un objeto Docente a la pagina nuevo_docente");
 		return "nuevo_docente";
 	}
 
 	@PostMapping("/guardar")
-	public ModelAndView saveNewDocentePage(@Validated @ModelAttribute("docente") Docente docente,
-			BindingResult bindingResult) {
-		
-		ModelAndView mav;
-		if (bindingResult.hasErrors()) {
-			logger.info("Method: saveNewDocentePage() - Information: Error en ingreso de datos para Docente.");
-			mav = new ModelAndView("nuevo_docente");
-			mav.addObject("docente", docente);
-			return mav;
-		}
-		
-		boolean status = docenteService.guardarDocente(docente);
+	public String saveNewDocentePage(@Validated @ModelAttribute("docente") Docente docente, BindingResult br,
+			Model model) {
 
-		if (status) {
-			logger.info("Method: saveNewDocentePage() - Information: Se agrego al nuevo docente.");
-			mav = new ModelAndView("redirect:/docente/listaDocentes");
+		if (br.hasErrors()) {
+			logger.info("Method: saveNewDocentePage() - Information: Error en ingreso de datos para Docente.");
+			model.addAttribute("docente", docente);
+			return "nuevo_docente";
 		}
-		else {
-			logger.info("Method: saveNewDocentePage() - Information: No Se agrego al nuevo docente.");
-			mav = new ModelAndView("nuevo_docente");
-			mav.addObject("docente", docente);
-			mav.addObject("status", status);
+
+		try {
+			docenteService.guardarDocente(docente);
+		} catch (Exception e) {
+			model.addAttribute("docente", docente);
 		}
-		return mav;
+		model.addAttribute("docente", docente);
+		return "redirect:/docente/listaDocentes";
 	}
-	
+
 	@GetMapping("/listaDocentes")
 	public ModelAndView getListadoDocentesPage() {
 		logger.info("Method: getListadoDocentePage() - Information: Se recuperan los regitros de la BD para Docente");
 		ModelAndView mav = new ModelAndView("lista_docentes");
-		List<Docente> docentes = docenteService.getListaDocente();
+		List<Docente> docentes = docenteService.listarDocentes();
 		mav.addObject("docentes", docentes);
 		return mav;
 	}
 
 	@GetMapping("/editar/{id}")
 	public ModelAndView getEditarDocentePage(@PathVariable(value = "id") Long id) {
-		logger.info("Method: getEditarDocentePage() - Information: Se edita al Docente con id "+id);
+		logger.info("Method: getEditarDocentePage() - Information: Se edita al Docente con id " + id);
 		ModelAndView mav = new ModelAndView("edicion_docente");
-		Optional<Docente> docente = docenteService.buscarDocente(id);
-		mav.addObject("docente", docente.get());
+		Docente docente = docenteService.buscarDocente(id);
+
+		mav.addObject("docente", docente);
 		return mav;
 	}
 
@@ -100,7 +99,7 @@ public class DocenteController {
 
 	@GetMapping("/eliminar/{legajo}")
 	public ModelAndView eliminarDatosDocente(@PathVariable(value = "legajo") Long id) {
-		logger.info("Method: eliminarDatosDocente() - Information: se elimina logicamente al Docente con id "+id);
+		logger.info("Method: eliminarDatosDocente() - Information: se elimina logicamente al Docente con id " + id);
 		ModelAndView mav = new ModelAndView("redirect:/docente/listaDocentes");
 		docenteService.eliminarDocente(id);
 		return mav;

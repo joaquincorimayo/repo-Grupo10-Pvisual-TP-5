@@ -1,89 +1,78 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Curso;
 import ar.edu.unju.fi.tp5.repository.ICursoRepository;
 import ar.edu.unju.fi.tp5.service.ICursoService;
+import ar.edu.unju.fi.tp5.util.ListaCursos;
+
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 
 @Service("CursoServiceImpList")
 public class CursoServiceImp implements ICursoService {
 
+	private static final Log logs = LogFactory.getLog(CursoServiceImp.class);
+
 	@Autowired
 	ICursoRepository cursoRepository;
+	@Autowired
+	private ListaCursos lista;
 
 	@Override
-	public Curso getCurso() {
+	public Curso nuevoCurso() {
 		return new Curso();
 	}
 
 	@Override
-	public boolean guardarCurso(Curso curso) {
-		
-		if(!existUser(curso.getCodigo())) {
-			curso.setEstado(true);
-			cursoRepository.save(curso);
-			return true;
-		}
-		
-		return false;
-	}
-
-	@Override
-	public void modificarCurso(Curso curso) {
+	public void guardarCurso(Curso curso) {
+		logs.info("Se agrego el curso");
+		curso.setEstado(true);
 		cursoRepository.save(curso);
-	}
-
-
-	@Override
-	public List<Curso> getListaCursos() {
-		List<Curso> cursos = cursoRepository.findByEstado(true);
-		return cursos;
-	}
-
-
-
-	@Override
-	public boolean existUser(int codigo) {
-		boolean band = false;
-		for(Curso c : cursoRepository.findAll()) {
-			if(c.getCodigo() == codigo) {
-				if(c.isEstado() == true) {
-					band=true;
-				}else {
-					band=false;
-				}
-			}
-		}
-		return band;
-	}
-
-	@Override
-	public Optional<Curso> buscarCurso(Long id) {
-		
-		return cursoRepository.findById(id);
+		lista.getCursos().add(curso);
 	}
 
 	@Override
 	public void eliminarCurso(Long id) {
-		Optional<Curso> curso = cursoRepository.findById(id);
-		curso.get().setEstado(false);
-		cursoRepository.save(curso.get());
-		
-	}
-	
-	@Override
-	public Curso devolverCurso(String titulo) {
-		return cursoRepository.findByTitulo(titulo);
-	}
-	
-	@Override
-	public Curso dameElCurso(Long id) {
-		return cursoRepository.findById(id).get();
+		for (int i = 0; i < lista.getCursos().size(); i++) {			
+			if (lista.getCursos().get(i).getId() == id) {				
+				lista.getCursos().get(i).setEstado(false);		
+			}            
+        }
 	}
 
+	@Override
+	public void modificarCurso(Curso curso) {
+		for (int i = 0; i < lista.getCursos().size(); i++) {			
+			if (lista.getCursos().get(i).getId() == curso.getId()) {
+				lista.getCursos().set(i, curso);			
+			}            
+        }
+	}
+
+	@Override
+	public List<Curso> listarCursos() {
+		return cursoRepository.findByEstado(true);
+	}
+
+	@Override
+	public Curso buscarCurso(Long id) {
+		Curso cursoEncontrado = new Curso();
+		for (int i = 0; i < lista.getCursos().size(); i++) {
+			if (lista.getCursos().get(i).getId() == id) {
+				cursoEncontrado = lista.getCursos().get(i);		
+			}            
+        }
+		return cursoEncontrado;
+	}
 }

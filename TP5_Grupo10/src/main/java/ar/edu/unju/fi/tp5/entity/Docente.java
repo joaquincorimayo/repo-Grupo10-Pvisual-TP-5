@@ -1,7 +1,6 @@
 package ar.edu.unju.fi.tp5.entity;
 
-
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,10 +16,22 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase que representa un objeto de tipo Docente
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 @Component
 @Entity
 @Table(name = "DOCENTE")
-public class Docente {
+public class Docente implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,17 +59,16 @@ public class Docente {
 	@NotEmpty(message = "El teléfono del docente no puede ser vacío.")
 	@Column(name = "DOC_TELEFONO")
 	private String telefono;
-	
-	@Column (name="DOC_ESTADO")
+
+	@Column(name = "DOC_ESTADO")
 	private boolean estado;
-	
+
 	@OneToMany(mappedBy = "docente")
-    private List<Curso> cursos = new ArrayList<Curso>();
-	
+	private List<Curso> cursos;
+
 	public Docente() {
-	
+
 	}
-	
 
 	public boolean isEstado() {
 		return estado;
@@ -125,12 +135,9 @@ public class Docente {
 		this.id = id;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Docente [id=" + id + ", legajo=" + legajo + ", nombre=" + nombre + ", apellido=" + apellido + ", email="
 				+ email + ", telefono=" + telefono + ", estado=" + estado + "]";
 	}
-
-
 }

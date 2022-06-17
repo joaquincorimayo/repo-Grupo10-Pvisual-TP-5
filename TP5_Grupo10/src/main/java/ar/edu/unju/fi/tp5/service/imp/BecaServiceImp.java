@@ -1,78 +1,90 @@
 package ar.edu.unju.fi.tp5.service.imp;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Beca;
 import ar.edu.unju.fi.tp5.repository.IBecaRepository;
 import ar.edu.unju.fi.tp5.service.IBecaService;
-import ar.edu.unju.fi.tp5.service.ICursoService;
+import ar.edu.unju.fi.tp5.util.ListaBecas;
+
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 
 @Service("BecaServiceImpList")
 public class BecaServiceImp implements IBecaService {
-
+	
+	private static final Log logs = LogFactory.getLog(BecaServiceImp.class);
+	
+	@Autowired
+	private ListaBecas lista;
+	
 	@Autowired
 	IBecaRepository becaRepository;
 
-	@Autowired
-	@Qualifier("CursoServiceImpList")
-	private ICursoService cursoService;
-	
 	@Override
 	public Beca getBeca() {
+		// TODO Auto-generated method stub
 		return new Beca();
 	}
-	
-	@Override
-	public boolean existBeca(int codigo) {
-		boolean bandera = false;
-		for (Beca a : becaRepository.findAll()) {
-			if (a.getCodigo() == codigo) {
-				if (a.isEstado() == true) {
-					bandera = true;
-				} else {
-					bandera = false;
-				}
-			}
-		}
-		return bandera;
-	}
 
 	@Override
-	public boolean guardarBeca(Beca beca) {
-		if (!existBeca(beca.getCodigo())) {
-			beca.setEstado(true);
-			becaRepository.save(beca);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public void modificarBeca(Beca beca) {
+	public void guardarBeca(Beca beca) {
+		beca.setEstado(true);
 		becaRepository.save(beca);
+		lista.getBecas().add(beca);
 	}
 
 	@Override
 	public void eliminarBeca(Long id) {
-		Optional<Beca> beca = becaRepository.findById(id);
-		beca.get().setEstado(false);
-		becaRepository.save(beca.get());
+		for (int i = 0; i < lista.getBecas().size(); i++) {
+			if (lista.getBecas().get(i).getId() == id) {
+				lista.getBecas().get(i).setEstado(false);
+				becaRepository.save(lista.getBecas().get(i));
+			}
+		}
 	}
 
 	@Override
-	public List<Beca> getListaBecas() {
-		List<Beca> becas = becaRepository.findByEstado(true);
-		return becas;
+	public void modificarBeca(Beca beca) {
+		for (int i = 0; i < lista.getBecas().size(); i++) {
+			if (lista.getBecas().get(i).getId() == beca.getId()) {
+				lista.getBecas().set(i, beca);
+				becaRepository.save(lista.getBecas().get(i));
+			}
+		}
 	}
 
 	@Override
-	public Optional<Beca> buscarBeca(Long id) {
-		return becaRepository.findById(id);
+	public List<Beca> listarBecas() {
+		List<Beca> aux_becas = new ArrayList<>();
+		for (int i = 0; i < becaRepository.findAll().size(); i++) {
+			if (lista.getBecas().get(i).isEstado() == true) {
+				aux_becas.add(lista.getBecas().get(i));
+			}
+		}
+		
+		return aux_becas;
+	}
+
+	@Override
+	public Beca buscarBeca(Long id) {
+		Beca becaEncontrada = new Beca();
+		for (int i = 0; i < lista.getBecas().size(); i++) {
+			if (lista.getBecas().get(i).getId() == id) {
+				becaEncontrada = lista.getBecas().get(i);
+			}
+		}
+		return becaEncontrada;
 	}
 
 }

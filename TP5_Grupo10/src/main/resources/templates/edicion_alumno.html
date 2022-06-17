@@ -16,14 +16,13 @@
 	<h1 class="text-center">Edicion de datos - Alumno</h1>
 	
 	<!-- Formulario de edicion -->
-	<form class="card p-3 bg-light" th:action="@{/alumno/modificar}"
-		method="POST" th:object="${alumno}">
+	<form class="card p-3 bg-light" th:action="@{/alumno/modificar}" method="POST" th:object="${alumno}">
 
 		<!-- Propiedades que no debe ser modificada, solamente se visualiza.-->
 		<div class="row mb-3">
 			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
 			<input type="hidden" th:field="*{dni}"> <label for="inputDni"
-				class="col-sm-2 col-form-label">DNI</label>
+				class="col-sm-2 col-form-label">DNI: </label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputDni"
 					th:value="*{dni}" disabled="disabled">
@@ -33,7 +32,7 @@
 		<div class="row mb-3">
 			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
 			<input type="hidden" th:field="*{id}"> <label for="inputid"
-				class="col-sm-2 col-form-label">ID</label>
+				class="col-sm-2 col-form-label">Registro Numero: </label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputid"
 					th:value="*{id}" disabled="disabled">
@@ -42,21 +41,15 @@
 		
 		<div class="row mb-3">
 			<!-- Permite mantener el valor dentro de la propiedad (input oculto, mantiene el valor) -->
-			<input type="hidden" th:field="*{estado}"> <label for="inputestado"
-				class="col-sm-2 col-form-label">ESTADO</label>
+			<input type="hidden" th:field="*{estado}"> 
+			<label for="inputestado" class="col-sm-2 col-form-label">ESTADO: </label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="inputestado"
 					th:value="*{estado}" disabled="disabled">
 			</div>
 		</div>
 		
-		
-		
-		
-		
-		
 		<!-- Propiedades que se podran modificar,incluye validacion. -->
-		
 		<div class="row mb-3">
 			<label for="inputNombres" class="col-sm-2 col-form-label">Nombres</label>
 			<div class="col-sm-10">
@@ -103,12 +96,9 @@
 			<button class="btn btn-primary me-md-2" type="submit">Confirmar</button>
 			<a th:href="@{/inicio}" id="cancel" class="btn btn-secondary">Cancelar</a>
 		</div>
-
 	</form>
-
 
 	<!-- Fragmento footer -->
 	<footer th:replace="layouts/footer::ffooter"></footer>
-
 </body>
 </html>

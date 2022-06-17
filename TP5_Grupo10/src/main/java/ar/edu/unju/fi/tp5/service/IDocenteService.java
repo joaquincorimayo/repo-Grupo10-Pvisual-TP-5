@@ -1,18 +1,23 @@
 package ar.edu.unju.fi.tp5.service;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import ar.edu.unju.fi.tp5.entity.Docente;
 
-public interface IDocenteService {
+/**
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
 
+@Service
+public interface IDocenteService {
 	public Docente getDocente();
-	public boolean guardarDocente(Docente docente);
-	public void modificarDocente(Docente docente);
+	public void guardarDocente(Docente docente);
 	public void eliminarDocente(Long id);
-	public List<Docente> getListaDocente();
-	public Optional<Docente> buscarDocente(Long id);
-	public boolean existUser(int legajo);
-	
+	public void modificarDocente(Docente docente);
+	public List<Docente> listarDocentes(); 
+	public Docente buscarDocente(Long id); 
 }

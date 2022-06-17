@@ -1,18 +1,15 @@
 package ar.edu.unju.fi.tp5.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,17 +23,29 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase que representa un objeto de tipo Curso
+ * 
+ * @author JoaquinCorimayo
+ *
+ */
+
 @Component
 @Entity
 @Table(name = "CURSO")
-public class Curso {
+public class Curso implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CUR_ID")
 	private Long id;
 
-	@Min(value = 1, message = "El valor mínimo es 1")
+	@Min(value = 1, message = "El valor mínimo permitido es 1000")
 	@Max(value = 9999, message = "El valor máximo permitido es 9999")
 	@Column(name = "CUR_CODIGO")
 	private int codigo;
@@ -70,62 +79,52 @@ public class Curso {
 	@Column(name = "CUR_MODALIDAD")
 	private String modalidad;
 
-	@Column(name = "CUR_SEMANAS")
-	private int dos;
-
 	@Column(name = "CUR_ESTADO")
 	private boolean estado;
 
-	// RELACION DOCENTE-CURSO Uni-direccional
+	// RELACIONes
+	@NotNull(message = "Debe seleccionar un docente")
 	@ManyToOne
-    @JoinColumn(name="DOC_ID", nullable=false)
+	@JoinColumn(name = "DOC_ID")
 	private Docente docente;
 
-	// RELACION BECA-CURSO Uni-direccional
-//	@OneToOne(cascade=CascadeType.ALL)
-//	@JoinColumn(name = "BEC_ID")
-	@OneToOne(mappedBy = "curso")
+	@OneToOne(mappedBy = "curso", cascade = CascadeType.ALL)
 	private Beca beca;
-
-	
-	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
-	//@JoinColumn(name="ALU_ID")
-	@ManyToMany
-	private List<Alumno> alumnos = new ArrayList<Alumno>();
 	// FIN RELACIONES
 
 	public Curso() {
 
 	}
 
-	public Curso(int codigo, String titulo, String categoria, LocalDate fechaFin, LocalDate fechaInicio,
-			int cantidadHoras, String modalidad, Docente docente) {
+	public Curso(Long id,
+			@Min(value = 1, message = "El valor mínimo permitido es 1000") @Max(value = 9999, message = "El valor máximo permitido es 9999") int codigo,
+			@NotEmpty(message = "El nombre del título no puede ser vacío") String titulo,
+			@NotEmpty(message = "El nombre de la categoria no puede ser vacío") String categoria,
+			@NotNull @FutureOrPresent(message = "La fecha debe ser hoy o posterior") LocalDate fechaInicio,
+			@NotNull @Future(message = "La fecha debe ser posterior a la actual") LocalDate fechaFin,
+			@Min(value = 1, message = "El valor mínimo es 1") @Max(value = 5, message = "El valor máximo permitido es 5") int cantidadHoras,
+			@NotEmpty(message = "La modalidad no puede estar vacia") String modalidad, boolean estado, Docente docente,
+			Beca beca) {
 		super();
+		this.id = id;
 		this.codigo = codigo;
 		this.titulo = titulo;
 		this.categoria = categoria;
-		this.fechaFin = fechaFin;
 		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
 		this.cantidadHoras = cantidadHoras;
 		this.modalidad = modalidad;
-		this.docente = docente;
-		this.dos = 2;
-	}
-
-	public boolean isEstado() {
-		return estado;
-	}
-
-	public void setEstado(boolean estado) {
 		this.estado = estado;
+		this.docente = docente;
+		this.beca = beca;
 	}
 
-	public int getDos() {
-		return dos;
+	public Long getId() {
+		return id;
 	}
 
-	public void setDos(int dos) {
-		this.dos = dos;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getCodigo() {
@@ -152,20 +151,20 @@ public class Curso {
 		this.categoria = categoria;
 	}
 
-	public LocalDate getFechaFin() {
-		return fechaFin;
-	}
-
-	public void setFechaFin(LocalDate fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 
 	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
+	}
+
+	public LocalDate getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(LocalDate fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 
 	public int getCantidadHoras() {
@@ -184,6 +183,14 @@ public class Curso {
 		this.modalidad = modalidad;
 	}
 
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
 	public Docente getDocente() {
 		return docente;
 	}
@@ -192,38 +199,12 @@ public class Curso {
 		this.docente = docente;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public Beca getBeca() {
 		return beca;
 	}
 
 	public void setBeca(Beca beca) {
 		this.beca = beca;
-	}
-
-
-
-	public List<Alumno> getAlumnos() {
-		return alumnos;
-	}
-
-	public void setAlumnos(List<Alumno> alumnos) {
-		this.alumnos = alumnos;
-	}
-
-	@Override
-	public String toString() {
-		return "Curso [id=" + id + ", codigo=" + codigo + ", titulo=" + titulo + ", categoria=" + categoria
-				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", cantidadHoras=" + cantidadHoras
-				+ ", modalidad=" + modalidad + ", dos=" + dos + ", estado=" + estado + ", docente=" + docente
-				+ ", beca=" + beca + ", alumnos=" + alumnos + "]";
 	}
 
 }
