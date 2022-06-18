@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * 
  * @author JoaquinCorimayo
+ * 
+ * @author LuisQuispe
  *
  */
 

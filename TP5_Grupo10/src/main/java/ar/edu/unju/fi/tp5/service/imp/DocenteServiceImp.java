@@ -18,6 +18,7 @@ import ar.edu.unju.fi.tp5.util.ListaDocente;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 
 @Service("DocenteServiceImpList")

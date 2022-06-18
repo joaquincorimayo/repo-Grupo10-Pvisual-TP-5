@@ -17,6 +17,7 @@ import ar.edu.unju.fi.tp5.util.ListaBecas;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 
 

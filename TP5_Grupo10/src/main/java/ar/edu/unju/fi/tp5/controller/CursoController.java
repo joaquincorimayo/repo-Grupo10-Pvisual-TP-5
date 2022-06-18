@@ -27,6 +27,8 @@ import ar.edu.unju.fi.tp5.util.ListaCategoriasCurso;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
+ *
  */
 
 @Controller
