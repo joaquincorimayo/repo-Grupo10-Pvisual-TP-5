@@ -38,21 +38,16 @@
 						<th scope="col">Fin</th>
 						<th scope="col">Modalidad</th>
 						<th scope="col">Docente</th>
-						<th scope="col">Semanas</th>
 					</tr>
 				</thead>
 
 				<tbody>
 					<tr th:each="curso:${cursos}">
 						<td th:text="${curso.titulo}"></td>
-<!-- 						<td th:text="${#temporals.format(curso.fechaInicio, 'dd-MM-yyyy')}"></td> -->
-<!-- 						<td th:text="${#temporals.format(curso.fechaFin, 'dd-MM-yyyy')}"></td> -->
 						<td th:text="${curso.fechaInicio}"></td>
 						<td th:text="${curso.fechaFin}"></td>
-<!-- 						Implementar unicamente la lista de docentes -->
-<!-- 						<td th:text="${curso.modalidad}"></td> -->
-<!-- 						<td th:text="${curso.docente.nombre}"></td> -->
-						<td th:text="${curso.dos}"></td>
+						<td th:text="${curso.modalidad}"></td>
+						<td th:text="${curso.docente.apellido}"></td>
 					</tr>
 				</tbody>
 			</table>
