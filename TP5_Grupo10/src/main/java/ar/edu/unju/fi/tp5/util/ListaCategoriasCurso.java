@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 
 

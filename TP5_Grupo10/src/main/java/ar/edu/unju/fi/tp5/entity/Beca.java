@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * Clase que representa un objeto de tipo Beca
  * 
  * @author JoaquinCorimayo
- *
+ * @author LuisQuispe
  */
 
 @Component

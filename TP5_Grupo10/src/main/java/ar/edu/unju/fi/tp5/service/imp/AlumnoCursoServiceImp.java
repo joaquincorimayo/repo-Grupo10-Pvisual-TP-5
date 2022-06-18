@@ -15,6 +15,7 @@ import ar.edu.unju.fi.tp5.service.IAlumnoCursoService;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 
 

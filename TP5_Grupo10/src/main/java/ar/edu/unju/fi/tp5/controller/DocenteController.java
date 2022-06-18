@@ -24,6 +24,8 @@ import ar.edu.unju.fi.tp5.service.IDocenteService;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
+ *
  */
 
 @Controller

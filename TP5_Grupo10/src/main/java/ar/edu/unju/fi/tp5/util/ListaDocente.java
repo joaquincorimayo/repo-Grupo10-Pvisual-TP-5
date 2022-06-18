@@ -10,6 +10,7 @@ import ar.edu.unju.fi.tp5.entity.Docente;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 
 

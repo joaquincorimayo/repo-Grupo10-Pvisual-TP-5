@@ -9,6 +9,7 @@ import ar.edu.unju.fi.tp5.entity.Docente;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 @Repository
 public interface IDocenteRepository extends JpaRepository<Docente, Long> {

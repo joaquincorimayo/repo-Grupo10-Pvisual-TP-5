@@ -10,6 +10,7 @@ import ar.edu.unju.fi.tp5.entity.Alumno;
  * 
  * @author JoaquinCorimayo
  *
+ * @author LuisQuispe
  */
 @Service
 public interface IAlumnoService {
